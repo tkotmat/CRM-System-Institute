@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { postRequest } from "../apiService";
 
 const initialForm = {
     Discipline: "",
@@ -11,6 +12,7 @@ const initialForm = {
 
 const PedagogicalLoadForm = () => {
     const [form, setForm] = useState(initialForm);
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -21,10 +23,9 @@ const PedagogicalLoadForm = () => {
         setForm(initialForm);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Простая валидация
         if (
             !form.Discipline.trim() ||
             !form.GroupNumber ||
@@ -46,11 +47,18 @@ const PedagogicalLoadForm = () => {
             HoursCount: Number(form.HoursCount),
         };
 
-        console.log("Добавить нагрузку:", newLoad);
-
-        // Тут можно вызвать callback для подъёма состояния
-
-        handleReset();
+        setLoading(true);
+        try {
+            const response = await postRequest("/api/PedagogicalLoad", newLoad);
+            alert("Нагрузка успешно добавлена");
+            console.log("Ответ сервера:", response);
+            handleReset();
+        } catch (error) {
+            console.error("Ошибка при добавлении нагрузки:", error);
+            alert("Ошибка при добавлении нагрузки. Проверьте консоль.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -174,15 +182,17 @@ const PedagogicalLoadForm = () => {
                     <button
                         type='button'
                         onClick={handleReset}
-                        className='bg-[#3C4D6B] hover:bg-[#586A91] text-white font-semibold py-2 px-6 rounded transition'
+                        disabled={loading}
+                        className='bg-[#3C4D6B] hover:bg-[#586A91] text-white font-semibold py-2 px-6 rounded transition disabled:opacity-50'
                     >
                         Очистить
                     </button>
                     <button
                         type='submit'
-                        className='bg-[#E6A17E] hover:bg-[#C77C4E] text-[#121212] font-semibold py-2 px-6 rounded transition'
+                        disabled={loading}
+                        className='bg-[#E6A17E] hover:bg-[#C77C4E] text-[#121212] font-semibold py-2 px-6 rounded transition disabled:opacity-50'
                     >
-                        Добавить
+                        {loading ? "Добавляем..." : "Добавить"}
                     </button>
                 </div>
             </form>

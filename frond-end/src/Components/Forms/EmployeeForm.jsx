@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import { postRequest } from "../apiService";
 
 const departments = ["комп`ютерної інженерії", "філософії і права"];
-
 const positions = ["асистент", "викладач", "доцент"];
 
 const EmployeeForm = () => {
@@ -41,10 +41,58 @@ const EmployeeForm = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Здесь можно отправить данные на сервер
-        console.log("Отправка данных сотрудника:", form);
+
+        // Простая валидация
+        if (!form.PassportNumber.trim()) {
+            alert("Введите номер паспорта");
+            return;
+        }
+        if (!form.TIN.trim()) {
+            alert("Введите ИНН");
+            return;
+        }
+        if (!form.Surname.trim()) {
+            alert("Введите фамилию");
+            return;
+        }
+        if (!form.Name.trim()) {
+            alert("Введите имя");
+            return;
+        }
+        if (!form.DepartmentName) {
+            alert("Выберите отдел");
+            return;
+        }
+        if (!form.Position) {
+            alert("Выберите должность");
+            return;
+        }
+        if (
+            form.WorkExperience &&
+            (isNaN(form.WorkExperience) || form.WorkExperience < 0)
+        ) {
+            alert("Введите корректный опыт работы");
+            return;
+        }
+
+        try {
+            const payload = {
+                ...form,
+                WorkExperience: form.WorkExperience
+                    ? Number(form.WorkExperience)
+                    : 0,
+            };
+
+            const result = await postRequest("/api/Employee", payload);
+            alert("Сотрудник успешно добавлен");
+            console.log("Ответ сервера:", result);
+            handleReset();
+        } catch (error) {
+            alert("Ошибка при добавлении сотрудника. Подробности в консоли.");
+            console.error(error);
+        }
     };
 
     return (
@@ -193,7 +241,6 @@ const EmployeeForm = () => {
                     />
                 </div>
 
-                {/* Кнопки */}
                 <div className='md:col-span-2 flex justify-end gap-4 mt-4'>
                     <button
                         type='button'

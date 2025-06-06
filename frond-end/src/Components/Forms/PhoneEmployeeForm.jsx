@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { postRequest } from "../apiService";
 
 const PhoneEmployeeForm = () => {
     const [form, setForm] = useState({
         PhoneNumber: "",
         PassportNumber: "",
     });
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -21,7 +23,7 @@ const PhoneEmployeeForm = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!form.PhoneNumber.trim() || !form.PassportNumber.trim()) {
@@ -29,10 +31,22 @@ const PhoneEmployeeForm = () => {
             return;
         }
 
-        console.log("Отправка телефона сотрудника:", form);
-        // Здесь можно сделать API вызов или другую логику
-
-        handleReset();
+        setLoading(true);
+        try {
+            const payload = {
+                PhoneNumber: form.PhoneNumber,
+                PassportNumber: form.PassportNumber,
+            };
+            const response = await postRequest("/api/References", payload);
+            alert("Телефон сотрудника успешно добавлен");
+            console.log("Ответ сервера:", response);
+            handleReset();
+        } catch (error) {
+            console.error("Ошибка при добавлении телефона сотрудника:", error);
+            alert("Ошибка при отправке данных. Посмотрите консоль.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -74,15 +88,17 @@ const PhoneEmployeeForm = () => {
                     <button
                         type='button'
                         onClick={handleReset}
-                        className='bg-[#3C4D6B] hover:bg-[#586A91] text-white font-semibold py-2 px-6 rounded transition'
+                        disabled={loading}
+                        className='bg-[#3C4D6B] hover:bg-[#586A91] text-white font-semibold py-2 px-6 rounded transition disabled:opacity-50'
                     >
                         Очистить
                     </button>
                     <button
                         type='submit'
-                        className='bg-[#E6A17E] hover:bg-[#C77C4E] text-[#121212] font-semibold py-2 px-6 rounded transition'
+                        disabled={loading}
+                        className='bg-[#E6A17E] hover:bg-[#C77C4E] text-[#121212] font-semibold py-2 px-6 rounded transition disabled:opacity-50'
                     >
-                        Добавить
+                        {loading ? "Отправка..." : "Добавить"}
                     </button>
                 </div>
             </form>

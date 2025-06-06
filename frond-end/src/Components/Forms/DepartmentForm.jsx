@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { postRequest } from "../apiService";
 
 const initialForm = {
     DepartmentName: "",
@@ -18,7 +19,7 @@ const DepartmentForm = () => {
         setForm(initialForm);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!form.DepartmentName.trim()) {
@@ -46,11 +47,14 @@ const DepartmentForm = () => {
             LecturerCount: Number(form.LecturerCount),
         };
 
-        console.log("Добавить отдел:", newDepartment);
-
-        // Можно поднять состояние или отправить на сервер здесь
-
-        handleReset();
+        try {
+            const result = await postRequest("/api/Department", newDepartment);
+            console.log("Отдел успешно добавлен:", result);
+            alert("Отдел успешно добавлен!");
+            handleReset();
+        } catch (error) {
+            alert("Ошибка при добавлении отдела. Подробности в консоли.");
+        }
     };
 
     return (

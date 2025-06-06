@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { postRequest } from "../apiService";
 
 const initialForm = {
     PassportNumber: "",
@@ -8,6 +9,7 @@ const initialForm = {
 
 const ReferencesForm = () => {
     const [form, setForm] = useState(initialForm);
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -18,7 +20,7 @@ const ReferencesForm = () => {
         setForm(initialForm);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (
@@ -30,18 +32,25 @@ const ReferencesForm = () => {
             return;
         }
 
-        // Можно добавить генерацию уникального Id, если нужно
         const newReference = {
             Id: crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(),
             PassportNumber: form.PassportNumber,
-            ReleaseDate: new Date(form.ReleaseDate),
+            ReleaseDate: form.ReleaseDate, // лучше передавать как строку ISO, на бекенде преобразуйте в дату
             ReferenceType: form.ReferenceType,
         };
 
-        console.log("Додати довідку:", newReference);
-
-        // Сброс формы
-        handleReset();
+        setLoading(true);
+        try {
+            const response = await postRequest("/api/References", newReference);
+            alert("Довідку успішно додано");
+            console.log("Відповідь сервера:", response);
+            handleReset();
+        } catch (error) {
+            console.error("Помилка при додаванні довідки:", error);
+            alert("Сталася помилка при відправці даних. Перевірте консоль.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -68,6 +77,7 @@ const ReferencesForm = () => {
                         onChange={handleChange}
                         placeholder='123456'
                         className='w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] rounded text-white focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
+                        disabled={loading}
                     />
                 </div>
 
@@ -85,6 +95,7 @@ const ReferencesForm = () => {
                         value={form.ReleaseDate}
                         onChange={handleChange}
                         className='w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] rounded text-white focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
+                        disabled={loading}
                     />
                 </div>
 
@@ -103,6 +114,7 @@ const ReferencesForm = () => {
                         onChange={handleChange}
                         placeholder='Наприклад: Робоча довідка'
                         className='w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] rounded text-white focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
+                        disabled={loading}
                     />
                 </div>
 
@@ -110,15 +122,17 @@ const ReferencesForm = () => {
                     <button
                         type='button'
                         onClick={handleReset}
-                        className='bg-[#3C4D6B] hover:bg-[#586A91] text-white font-semibold py-2 px-6 rounded transition'
+                        disabled={loading}
+                        className='bg-[#3C4D6B] hover:bg-[#586A91] text-white font-semibold py-2 px-6 rounded transition disabled:opacity-50'
                     >
                         Очистити
                     </button>
                     <button
                         type='submit'
-                        className='bg-[#E6A17E] hover:bg-[#C77C4E] text-[#121212] font-semibold py-2 px-6 rounded transition'
+                        disabled={loading}
+                        className='bg-[#E6A17E] hover:bg-[#C77C4E] text-[#121212] font-semibold py-2 px-6 rounded transition disabled:opacity-50'
                     >
-                        Додати
+                        {loading ? "Відправка..." : "Додати"}
                     </button>
                 </div>
             </form>

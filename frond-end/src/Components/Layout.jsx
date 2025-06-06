@@ -134,7 +134,7 @@ const Layout = () => {
                                 to='/home/forms/references'
                                 className='text-[#AFC6E0] hover:text-[#E6A17E] text-sm'
                             >
-                                Список літератури
+                                Довідки
                             </Link>
                         </div>
                     )}
