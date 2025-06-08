@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { postRequest } from "../apiService";
+import { useState } from "react";
 
 const initialForm = {
     VacationType: "",
@@ -10,7 +9,6 @@ const initialForm = {
 
 const VacationForm = () => {
     const [form, setForm] = useState(initialForm);
-    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -39,24 +37,37 @@ const VacationForm = () => {
             return;
         }
 
-        const newVacation = {
-            VacationType: form.VacationType,
-            PassportNumber: form.PassportNumber,
-            StartDate: form.StartDate, // строка в формате ISO, если нужно — преобразовать на сервере
-            EndDate: form.EndDate,
+        const payload = {
+            VacationType: form.VacationType.trim(),
+            PassportNumber: parseInt(form.PassportNumber, 10),
+            StartDate: new Date(form.StartDate + "T00:00:00Z").toISOString(),
+            EndDate: new Date(form.EndDate + "T00:00:00Z").toISOString(),
         };
 
-        setLoading(true);
         try {
-            const response = await postRequest("/api/Vacations", newVacation);
-            alert("Відпустку успішно додано");
-            console.log("Відповідь сервера:", response);
+            const response = await fetch(
+                "https://localhost:7032/api/Vacation",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(payload),
+                }
+            );
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(errorText || "Щось пішло не так...");
+            }
+
+            const data = await response.json();
+            console.log("Відпустку додано:", data);
+            alert("Відпустку успішно додано!");
             handleReset();
         } catch (error) {
-            console.error("Помилка при додаванні відпустки:", error);
-            alert("Сталася помилка при відправці даних. Перевірте консоль.");
-        } finally {
-            setLoading(false);
+            console.error("Помилка при збереженні:", error);
+            alert(`Помилка при збереженні: ${error.message}`);
         }
     };
 
@@ -84,7 +95,6 @@ const VacationForm = () => {
                         onChange={handleChange}
                         placeholder='Наприклад: Щорічна відпустка'
                         className='w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] text-white rounded focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
-                        disabled={loading}
                     />
                 </div>
 
@@ -97,13 +107,12 @@ const VacationForm = () => {
                     </label>
                     <input
                         id='PassportNumber'
-                        type='text'
+                        type='number'
                         name='PassportNumber'
                         value={form.PassportNumber}
                         onChange={handleChange}
                         placeholder='123456'
                         className='w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] text-white rounded focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
-                        disabled={loading}
                     />
                 </div>
 
@@ -121,7 +130,6 @@ const VacationForm = () => {
                         value={form.StartDate}
                         onChange={handleChange}
                         className='w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] text-white rounded focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
-                        disabled={loading}
                     />
                 </div>
 
@@ -139,7 +147,6 @@ const VacationForm = () => {
                         value={form.EndDate}
                         onChange={handleChange}
                         className='w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] text-white rounded focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
-                        disabled={loading}
                     />
                 </div>
 
@@ -147,17 +154,15 @@ const VacationForm = () => {
                     <button
                         type='button'
                         onClick={handleReset}
-                        disabled={loading}
-                        className='bg-[#3C4D6B] hover:bg-[#586A91] text-white font-semibold py-2 px-6 rounded transition disabled:opacity-50'
+                        className='bg-[#3C4D6B] hover:bg-[#586A91] text-white font-semibold py-2 px-6 rounded transition'
                     >
                         Очистити
                     </button>
                     <button
                         type='submit'
-                        disabled={loading}
-                        className='bg-[#E6A17E] hover:bg-[#C77C4E] text-[#121212] font-semibold py-2 px-6 rounded transition disabled:opacity-50'
+                        className='bg-[#E6A17E] hover:bg-[#C77C4E] text-[#121212] font-semibold py-2 px-6 rounded transition'
                     >
-                        {loading ? "Відправка..." : "Додати"}
+                        Додати
                     </button>
                 </div>
             </form>

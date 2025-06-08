@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getRequest } from "../apiService";
 
 const monthNames = [
@@ -29,14 +29,14 @@ const EmployeesOnLeave = () => {
     const now = new Date();
     const [vacations, setVacations] = useState([]);
     const [selectedYear, setSelectedYear] = useState(now.getFullYear());
-    const [selectedMonth, setSelectedMonth] = useState(now.getMonth()); // 0-based
+    const [selectedMonth, setSelectedMonth] = useState(now.getMonth());
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchVacations = async () => {
             try {
-                const data = await getRequest("/api/Vacation"); // предполагается, что здесь отпуска
+                const data = await getRequest("/api/Vacation");
                 setVacations(data);
             } catch (err) {
                 setError("Помилка завантаження даних відпусток");
@@ -47,22 +47,16 @@ const EmployeesOnLeave = () => {
         fetchVacations();
     }, []);
 
-    // Функция проверки, есть ли пересечение отпуска с выбранным месяцем
     const isVacationInSelectedMonth = (start, end) => {
         const startDate = new Date(start);
         const endDate = new Date(end);
 
-        // Первый день выбранного месяца
         const monthStart = new Date(selectedYear, selectedMonth, 1);
-        // Последний день выбранного месяца
         const monthEnd = new Date(selectedYear, selectedMonth + 1, 0);
 
-        // Отпуск пересекается с выбранным месяцем, если:
-        // startDate <= monthEnd и endDate >= monthStart
         return startDate <= monthEnd && endDate >= monthStart;
     };
 
-    // Фильтрация отпусков по выбранному месяцу
     const filteredVacations = vacations.filter((vac) =>
         isVacationInSelectedMonth(vac.startDate, vac.endDate)
     );

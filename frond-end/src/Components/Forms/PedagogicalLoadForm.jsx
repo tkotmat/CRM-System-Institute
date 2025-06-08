@@ -34,7 +34,7 @@ const PedagogicalLoadForm = () => {
             !form.Semester ||
             !form.HoursCount
         ) {
-            alert("Пожалуйста, заполните все поля.");
+            alert("Будь ласка, заповніть всі поля.");
             return;
         }
 
@@ -50,12 +50,12 @@ const PedagogicalLoadForm = () => {
         setLoading(true);
         try {
             const response = await postRequest("/api/PedagogicalLoad", newLoad);
-            alert("Нагрузка успешно добавлена");
-            console.log("Ответ сервера:", response);
+            console.log("Відповідь від сервера:", response);
+            alert("Навантаження успішно додано!");
             handleReset();
         } catch (error) {
-            console.error("Ошибка при добавлении нагрузки:", error);
-            alert("Ошибка при добавлении нагрузки. Проверьте консоль.");
+            console.error("Помилка при відправці навантаження:", error);
+            alert("Сталася помилка при додаванні навантаження.");
         } finally {
             setLoading(false);
         }
@@ -64,7 +64,7 @@ const PedagogicalLoadForm = () => {
     return (
         <div className='max-w-4xl mx-auto p-6 mb-8 mt-10 bg-[#1C263A] border border-[#3C4D6B] rounded-lg shadow-lg text-[#D1D5DB]'>
             <h2 className='text-xl font-semibold mb-6 text-white'>
-                Добавить нагрузку преподавателя
+                Додати навантаження викладача
             </h2>
             <form
                 onSubmit={handleSubmit}
@@ -75,7 +75,7 @@ const PedagogicalLoadForm = () => {
                         htmlFor='Discipline'
                         className='block text-[#AFC6E0] mb-1'
                     >
-                        Дисциплина
+                        Дисципліна
                     </label>
                     <input
                         id='Discipline'
@@ -93,7 +93,7 @@ const PedagogicalLoadForm = () => {
                         htmlFor='GroupNumber'
                         className='block text-[#AFC6E0] mb-1'
                     >
-                        Номер группы
+                        Номер групи
                     </label>
                     <input
                         id='GroupNumber'
@@ -129,7 +129,7 @@ const PedagogicalLoadForm = () => {
                         htmlFor='DepartmentName'
                         className='block text-[#AFC6E0] mb-1'
                     >
-                        Отдел
+                        Відділ
                     </label>
                     <input
                         id='DepartmentName'
@@ -137,7 +137,7 @@ const PedagogicalLoadForm = () => {
                         type='text'
                         value={form.DepartmentName}
                         onChange={handleChange}
-                        placeholder='Физико-математический'
+                        placeholder='Фізико-математичний'
                         className='w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] rounded text-white focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
                     />
                 </div>
@@ -165,7 +165,7 @@ const PedagogicalLoadForm = () => {
                         htmlFor='HoursCount'
                         className='block text-[#AFC6E0] mb-1'
                     >
-                        Кол-во часов
+                        Кількість годин
                     </label>
                     <input
                         id='HoursCount'
@@ -182,17 +182,16 @@ const PedagogicalLoadForm = () => {
                     <button
                         type='button'
                         onClick={handleReset}
-                        disabled={loading}
-                        className='bg-[#3C4D6B] hover:bg-[#586A91] text-white font-semibold py-2 px-6 rounded transition disabled:opacity-50'
+                        className='bg-[#3C4D6B] hover:bg-[#586A91] text-white font-semibold py-2 px-6 rounded transition'
                     >
-                        Очистить
+                        Очистити
                     </button>
                     <button
                         type='submit'
                         disabled={loading}
-                        className='bg-[#E6A17E] hover:bg-[#C77C4E] text-[#121212] font-semibold py-2 px-6 rounded transition disabled:opacity-50'
+                        className='bg-[#E6A17E] hover:bg-[#C77C4E] text-[#121212] font-semibold py-2 px-6 rounded transition'
                     >
-                        {loading ? "Добавляем..." : "Добавить"}
+                        {loading ? "Відправка..." : "Додати"}
                     </button>
                 </div>
             </form>

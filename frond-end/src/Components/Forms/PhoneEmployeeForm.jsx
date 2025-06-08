@@ -1,12 +1,30 @@
-import React, { useState } from "react";
-import { postRequest } from "../apiService";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { getRequest } from "../apiService";
 
 const PhoneEmployeeForm = () => {
     const [form, setForm] = useState({
         PhoneNumber: "",
         PassportNumber: "",
     });
-    const [loading, setLoading] = useState(false);
+
+    const [employees, setEmployees] = useState([]);
+
+    useEffect(() => {
+        const fetchEmployees = async () => {
+            try {
+                const data = await getRequest("/api/Employee");
+                setEmployees(data);
+            } catch (error) {
+                console.error(
+                    "Помилка під час завантаження співробітників:",
+                    error
+                );
+            }
+        };
+
+        fetchEmployees();
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -27,32 +45,27 @@ const PhoneEmployeeForm = () => {
         e.preventDefault();
 
         if (!form.PhoneNumber.trim() || !form.PassportNumber.trim()) {
-            alert("Пожалуйста, заполните все поля");
+            alert("Будь ласка, заповніть усі поля");
             return;
         }
 
-        setLoading(true);
         try {
-            const payload = {
-                PhoneNumber: form.PhoneNumber,
-                PassportNumber: form.PassportNumber,
-            };
-            const response = await postRequest("/api/References", payload);
-            alert("Телефон сотрудника успешно добавлен");
-            console.log("Ответ сервера:", response);
+            await axios.post("https://localhost:7032/api/PhoneEmployee", form);
+            alert("Телефон успішно доданий!");
             handleReset();
         } catch (error) {
-            console.error("Ошибка при добавлении телефона сотрудника:", error);
-            alert("Ошибка при отправке данных. Посмотрите консоль.");
-        } finally {
-            setLoading(false);
+            console.error(
+                "Помилка при додаванні телефону:",
+                error.response?.data || error.message
+            );
+            alert("Помилка при надсиланні даних. Спробуйте пізніше.");
         }
     };
 
     return (
         <div className='max-w-3xl mx-auto p-6 mb-8 mt-10 bg-[#1C263A] border border-[#3C4D6B] rounded-lg shadow-lg text-[#D1D5DB]'>
             <h2 className='text-xl font-semibold mb-6 text-white'>
-                Добавить телефон сотрудника
+                Додати телефон співробітника
             </h2>
             <form
                 onSubmit={handleSubmit}
@@ -67,38 +80,46 @@ const PhoneEmployeeForm = () => {
                         onChange={handleChange}
                         placeholder='+380 (999) 123-45-67'
                         className='w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] text-white rounded focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
+                        required
                     />
                 </div>
 
                 <div>
                     <label className='block text-[#AFC6E0] mb-1'>
-                        Номер паспорта
+                        Номер паспорта співробітника
                     </label>
-                    <input
-                        type='text'
+                    <select
                         name='PassportNumber'
                         value={form.PassportNumber}
                         onChange={handleChange}
-                        placeholder='123456'
                         className='w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] text-white rounded focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
-                    />
+                        required
+                    >
+                        <option value=''>Виберіть паспорт</option>
+                        {employees.map((emp) => (
+                            <option
+                                key={emp.passportNumber}
+                                value={emp.passportNumber}
+                            >
+                                {emp.passportNumber} — {emp.surname} {emp.name}
+                            </option>
+                        ))}
+                    </select>
                 </div>
 
                 <div className='md:col-span-2 flex justify-end gap-4 mt-4'>
                     <button
                         type='button'
                         onClick={handleReset}
-                        disabled={loading}
-                        className='bg-[#3C4D6B] hover:bg-[#586A91] text-white font-semibold py-2 px-6 rounded transition disabled:opacity-50'
+                        className='bg-[#3C4D6B] hover:bg-[#586A91] text-white font-semibold py-2 px-6 rounded transition'
                     >
-                        Очистить
+                        Очистити
                     </button>
                     <button
                         type='submit'
-                        disabled={loading}
-                        className='bg-[#E6A17E] hover:bg-[#C77C4E] text-[#121212] font-semibold py-2 px-6 rounded transition disabled:opacity-50'
+                        className='bg-[#E6A17E] hover:bg-[#C77C4E] text-[#121212] font-semibold py-2 px-6 rounded transition'
                     >
-                        {loading ? "Отправка..." : "Добавить"}
+                        Додати
                     </button>
                 </div>
             </form>

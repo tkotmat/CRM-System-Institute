@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getRequest } from "../apiService";
 
 const AverageLoadAssistants = () => {
@@ -17,7 +17,7 @@ const AverageLoadAssistants = () => {
                 ).filter(Boolean);
                 setDepartments(uniqueDepartments);
             } catch (err) {
-                console.error("Ошибка при загрузке отделов:", err);
+                console.error("Помилка при завантаженні відділів:", err);
             }
         };
         fetchDepartments();
@@ -51,8 +51,8 @@ const AverageLoadAssistants = () => {
 
             setAverageLoad(average);
         } catch (err) {
-            console.error("Ошибка при расчете:", err);
-            setError("Ошибка при расчете средней нагрузки.");
+            console.error("Помилка при розрахунку:", err);
+            setError("Помилка при розрахунку середнього навантаження.");
         } finally {
             setLoading(false);
         }
@@ -61,7 +61,7 @@ const AverageLoadAssistants = () => {
     return (
         <div className='bg-[#121212] text-[#D1D5DB] min-h-screen p-6'>
             <h1 className='text-2xl font-bold mb-6 text-white'>
-                Средняя нагрузка ассистентов по кафедре
+                Середнє навантаження асистентів по кафедрі
             </h1>
 
             <div className='flex gap-4 items-center mb-4'>
@@ -70,7 +70,7 @@ const AverageLoadAssistants = () => {
                     onChange={(e) => setDepartmentFilter(e.target.value)}
                     className='px-4 py-2 bg-[#121212] border border-[#3C4D6B] rounded text-white focus:ring-2 focus:ring-[#E6A17E]'
                 >
-                    <option value=''>Выберите кафедру</option>
+                    <option value=''>Оберіть Відділення</option>
                     {departments.map((dep, idx) => (
                         <option key={idx} value={dep}>
                             {dep}
@@ -81,16 +81,16 @@ const AverageLoadAssistants = () => {
                     onClick={calculateAverageLoad}
                     className='bg-[#E6A17E] text-black px-6 py-2 rounded hover:bg-[#cf8a6d] transition'
                 >
-                    Рассчитать
+                    Розрахувати
                 </button>
             </div>
 
-            {loading && <p className='text-white'>Загрузка...</p>}
+            {loading && <p className='text-white'>Завантаження...</p>}
             {error && <p className='text-red-500'>{error}</p>}
             {averageLoad !== null && !loading && !error && (
                 <p className='text-lg'>
-                    Средняя нагрузка ассистентов:{" "}
-                    <span className='font-bold'>{averageLoad}</span> часов
+                    Середнє навантаження асистентів:{" "}
+                    <span className='font-bold'>{averageLoad}</span> годин
                 </p>
             )}
         </div>

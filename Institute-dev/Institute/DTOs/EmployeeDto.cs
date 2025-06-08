@@ -6,8 +6,8 @@ namespace Institute.DTOs
     {
         public int PassportNumber { get; set; }
         public int TIN { get; set; }
-        public string Surname { get; set; }
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string MiddleName { get; set; }
         public string DepartmentName { get; set; } = null!;
         public string Position { get; set; }

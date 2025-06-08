@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { postRequest } from "../apiService";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const initialForm = {
     PassportNumber: "",
@@ -7,13 +7,43 @@ const initialForm = {
     ReferenceType: "",
 };
 
+const toUTCDateString = (localDate) => {
+    const date = new Date(localDate);
+    return new Date(
+        Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+    ).toISOString();
+};
+
 const ReferencesForm = () => {
     const [form, setForm] = useState(initialForm);
-    const [loading, setLoading] = useState(false);
+    const [passportList, setPassportList] = useState([]);
+
+    useEffect(() => {
+        const fetchPassports = async () => {
+            try {
+                const response = await axios.get(
+                    "https://localhost:7032/api/Employee"
+                );
+                const employees = response.data;
+                const uniquePassports = [
+                    ...new Set(employees.map((e) => e.passportNumber)),
+                ];
+                setPassportList(uniquePassports);
+            } catch (error) {
+                console.error("Помилка при отриманні співробітників:", error);
+            }
+        };
+
+        fetchPassports();
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setForm((prev) => ({ ...prev, [name]: value }));
+
+        setForm((prev) => ({
+            ...prev,
+            [name]: name === "PassportNumber" ? parseInt(value, 10) : value,
+        }));
     };
 
     const handleReset = () => {
@@ -24,7 +54,7 @@ const ReferencesForm = () => {
         e.preventDefault();
 
         if (
-            !form.PassportNumber.trim() ||
+            !form.PassportNumber ||
             !form.ReleaseDate ||
             !form.ReferenceType.trim()
         ) {
@@ -34,22 +64,48 @@ const ReferencesForm = () => {
 
         const newReference = {
             Id: crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(),
-            PassportNumber: form.PassportNumber,
-            ReleaseDate: form.ReleaseDate, // лучше передавать как строку ISO, на бекенде преобразуйте в дату
+            PassportNumber: parseInt(form.PassportNumber),
+            ReleaseDate: toUTCDateString(form.ReleaseDate),
             ReferenceType: form.ReferenceType,
         };
 
-        setLoading(true);
         try {
-            const response = await postRequest("/api/References", newReference);
-            alert("Довідку успішно додано");
-            console.log("Відповідь сервера:", response);
+            console.log("✅ Данные для отправки:");
+            console.table(newReference);
+
+            const response = await axios.post(
+                "https://localhost:7032/api/References",
+                newReference,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            console.log("✅ Відповідь від сервера:", response);
+            alert("Довідку успішно додано!");
             handleReset();
         } catch (error) {
-            console.error("Помилка при додаванні довідки:", error);
-            alert("Сталася помилка при відправці даних. Перевірте консоль.");
-        } finally {
-            setLoading(false);
+            console.error("❌ Помилка при додаванні довідки:", error);
+
+            if (error.response) {
+                console.error("📦 Відповідь сервера:", error.response.data);
+                console.error("📦 Код відповіді:", error.response.status);
+                console.error("📦 Заголовки:", error.response.headers);
+            } else if (error.request) {
+                console.error(
+                    "🚫 Запит було надіслано, але відповідь не отримана",
+                    error.request
+                );
+            } else {
+                console.error(
+                    "⚙️ Помилка під час створення запиту",
+                    error.message
+                );
+            }
+
+            alert("Помилка при додаванні довідки.");
         }
     };
 
@@ -69,16 +125,20 @@ const ReferencesForm = () => {
                     >
                         Номер паспорта
                     </label>
-                    <input
+                    <select
                         id='PassportNumber'
                         name='PassportNumber'
-                        type='text'
                         value={form.PassportNumber}
                         onChange={handleChange}
-                        placeholder='123456'
                         className='w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] rounded text-white focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
-                        disabled={loading}
-                    />
+                    >
+                        <option value=''>-- Оберіть номер паспорта --</option>
+                        {passportList.map((passport) => (
+                            <option key={passport} value={passport}>
+                                {passport}
+                            </option>
+                        ))}
+                    </select>
                 </div>
 
                 <div>
@@ -95,7 +155,6 @@ const ReferencesForm = () => {
                         value={form.ReleaseDate}
                         onChange={handleChange}
                         className='w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] rounded text-white focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
-                        disabled={loading}
                     />
                 </div>
 
@@ -114,7 +173,6 @@ const ReferencesForm = () => {
                         onChange={handleChange}
                         placeholder='Наприклад: Робоча довідка'
                         className='w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] rounded text-white focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
-                        disabled={loading}
                     />
                 </div>
 
@@ -122,17 +180,15 @@ const ReferencesForm = () => {
                     <button
                         type='button'
                         onClick={handleReset}
-                        disabled={loading}
-                        className='bg-[#3C4D6B] hover:bg-[#586A91] text-white font-semibold py-2 px-6 rounded transition disabled:opacity-50'
+                        className='bg-[#3C4D6B] hover:bg-[#586A91] text-white font-semibold py-2 px-6 rounded transition'
                     >
                         Очистити
                     </button>
                     <button
                         type='submit'
-                        disabled={loading}
-                        className='bg-[#E6A17E] hover:bg-[#C77C4E] text-[#121212] font-semibold py-2 px-6 rounded transition disabled:opacity-50'
+                        className='bg-[#E6A17E] hover:bg-[#C77C4E] text-[#121212] font-semibold py-2 px-6 rounded transition'
                     >
-                        {loading ? "Відправка..." : "Додати"}
+                        Додати
                     </button>
                 </div>
             </form>

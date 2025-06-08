@@ -42,31 +42,31 @@ namespace Institute.Migrations
                         new
                         {
                             DepartmentName = "Математика",
-                            Head = "Іванов І.І.",
+                            Head = "Іваненко О.П.",
                             LecturerCount = 10
                         },
                         new
                         {
                             DepartmentName = "Фізика",
-                            Head = "Петров П.П.",
+                            Head = "Ковальчук С.В.",
                             LecturerCount = 8
                         },
                         new
                         {
                             DepartmentName = "Хімія",
-                            Head = "Сідоров С.С.",
+                            Head = "Шевченко М.В.",
                             LecturerCount = 7
                         },
                         new
                         {
                             DepartmentName = "Біологія",
-                            Head = "Кузнецов К.К.",
+                            Head = "Петренко І.Д.",
                             LecturerCount = 5
                         },
                         new
                         {
                             DepartmentName = "Інформатика",
-                            Head = "Смирнов С.С.",
+                            Head = "Ткаченко Н.С.",
                             LecturerCount = 12
                         });
                 });
@@ -97,6 +97,10 @@ namespace Institute.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("HireDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -104,10 +108,6 @@ namespace Institute.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("MiddleName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -119,15 +119,15 @@ namespace Institute.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<int>("TIN")
                         .HasColumnType("integer");
 
                     b.Property<int>("WorkExperience")
                         .HasColumnType("integer");
+
+                    b.Property<string>("lastName")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("PassportNumber");
 
@@ -140,361 +140,361 @@ namespace Institute.Migrations
                         {
                             PassportNumber = 1001,
                             Category = "Основна",
-                            City = "Місто2",
-                            ContractEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ContractStartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            City = "Київ",
+                            ContractEndDate = new DateTime(2027, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ContractStartDate = new DateTime(2026, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DepartmentName = "Математика",
+                            FirstName = "Коваленко",
                             HireDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            IsWarVeteran = false,
-                            MiddleName = "По-батькові1",
-                            Name = "Ім'я1",
+                            IsWarVeteran = true,
+                            MiddleName = "Олександрович",
                             Position = "Викладач",
-                            Street = "Вулиця 1",
-                            Surname = "Прізвище1",
+                            Street = "вул. Незалежності, 1",
                             TIN = 5001,
-                            WorkExperience = 1
+                            WorkExperience = 1,
+                            lastName = "Олександр"
                         },
                         new
                         {
                             PassportNumber = 1002,
                             Category = "Основна",
-                            City = "Місто3",
-                            ContractEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ContractStartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            City = "Львів",
+                            ContractEndDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ContractStartDate = new DateTime(2025, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DepartmentName = "Фізика",
+                            FirstName = "Шевчук",
                             HireDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsWarVeteran = false,
-                            MiddleName = "По-батькові2",
-                            Name = "Ім'я2",
-                            Position = "Викладач",
-                            Street = "Вулиця 2",
-                            Surname = "Прізвище2",
+                            MiddleName = "Петрівна",
+                            Position = "Асистент",
+                            Street = "вул. Незалежності, 2",
                             TIN = 5002,
-                            WorkExperience = 2
+                            WorkExperience = 2,
+                            lastName = "Марина"
                         },
                         new
                         {
                             PassportNumber = 1003,
                             Category = "Основна",
-                            City = "Місто1",
-                            ContractEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ContractStartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            City = "Одеса",
+                            ContractEndDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ContractStartDate = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DepartmentName = "Хімія",
+                            FirstName = "Бондаренко",
                             HireDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsWarVeteran = false,
-                            MiddleName = "По-батькові3",
-                            Name = "Ім'я3",
-                            Position = "Викладач",
-                            Street = "Вулиця 3",
-                            Surname = "Прізвище3",
+                            MiddleName = "Вікторович",
+                            Position = "Доцент",
+                            Street = "вул. Незалежності, 3",
                             TIN = 5003,
-                            WorkExperience = 3
+                            WorkExperience = 3,
+                            lastName = "Віктор"
                         },
                         new
                         {
                             PassportNumber = 1004,
                             Category = "Основна",
-                            City = "Місто2",
-                            ContractEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ContractStartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            City = "Харків",
+                            ContractEndDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ContractStartDate = new DateTime(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DepartmentName = "Біологія",
+                            FirstName = "Лисенко",
                             HireDate = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsWarVeteran = false,
-                            MiddleName = "По-батькові4",
-                            Name = "Ім'я4",
+                            MiddleName = "Ігорівна",
                             Position = "Викладач",
-                            Street = "Вулиця 4",
-                            Surname = "Прізвище4",
+                            Street = "вул. Незалежності, 4",
                             TIN = 5004,
-                            WorkExperience = 4
+                            WorkExperience = 4,
+                            lastName = "Ірина"
                         },
                         new
                         {
                             PassportNumber = 1005,
                             Category = "Основна",
-                            City = "Місто3",
-                            ContractEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ContractStartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            City = "Дніпро",
+                            ContractEndDate = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ContractStartDate = new DateTime(2022, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DepartmentName = "Інформатика",
+                            FirstName = "Мельник",
                             HireDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsWarVeteran = false,
-                            MiddleName = "По-батькові5",
-                            Name = "Ім'я5",
-                            Position = "Викладач",
-                            Street = "Вулиця 5",
-                            Surname = "Прізвище5",
+                            MiddleName = "Андрійович",
+                            Position = "Асистент",
+                            Street = "вул. Незалежності, 5",
                             TIN = 5005,
-                            WorkExperience = 5
+                            WorkExperience = 5,
+                            lastName = "Андрій"
                         },
                         new
                         {
                             PassportNumber = 1006,
                             Category = "Основна",
-                            City = "Місто1",
-                            ContractEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ContractStartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            City = "Запоріжжя",
+                            ContractEndDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ContractStartDate = new DateTime(2021, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DepartmentName = "Математика",
+                            FirstName = "Ткач",
                             HireDate = new DateTime(2021, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            IsWarVeteran = false,
-                            MiddleName = "По-батькові6",
-                            Name = "Ім'я6",
-                            Position = "Викладач",
-                            Street = "Вулиця 6",
-                            Surname = "Прізвище6",
+                            IsWarVeteran = true,
+                            MiddleName = "Олексіївна",
+                            Position = "Доцент",
+                            Street = "вул. Незалежності, 6",
                             TIN = 5006,
-                            WorkExperience = 6
+                            WorkExperience = 6,
+                            lastName = "Олена"
                         },
                         new
                         {
                             PassportNumber = 1007,
                             Category = "Основна",
-                            City = "Місто2",
-                            ContractEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ContractStartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            City = "Київ",
+                            ContractEndDate = new DateTime(2021, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ContractStartDate = new DateTime(2020, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DepartmentName = "Фізика",
+                            FirstName = "Гончар",
                             HireDate = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsWarVeteran = false,
-                            MiddleName = "По-батькові7",
-                            Name = "Ім'я7",
+                            MiddleName = "Володимирович",
                             Position = "Викладач",
-                            Street = "Вулиця 7",
-                            Surname = "Прізвище7",
+                            Street = "вул. Незалежності, 7",
                             TIN = 5007,
-                            WorkExperience = 7
+                            WorkExperience = 7,
+                            lastName = "Володимир"
                         },
                         new
                         {
                             PassportNumber = 1008,
                             Category = "Основна",
-                            City = "Місто3",
-                            ContractEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ContractStartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            City = "Львів",
+                            ContractEndDate = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ContractStartDate = new DateTime(2019, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DepartmentName = "Хімія",
+                            FirstName = "Кузьменко",
                             HireDate = new DateTime(2019, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsWarVeteran = false,
-                            MiddleName = "По-батькові8",
-                            Name = "Ім'я8",
-                            Position = "Викладач",
-                            Street = "Вулиця 8",
-                            Surname = "Прізвище8",
+                            MiddleName = "Петрівна",
+                            Position = "Асистент",
+                            Street = "вул. Незалежності, 8",
                             TIN = 5008,
-                            WorkExperience = 8
+                            WorkExperience = 8,
+                            lastName = "Наталія"
                         },
                         new
                         {
                             PassportNumber = 1009,
                             Category = "Основна",
-                            City = "Місто1",
-                            ContractEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ContractStartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            City = "Одеса",
+                            ContractEndDate = new DateTime(2019, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ContractStartDate = new DateTime(2018, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DepartmentName = "Біологія",
+                            FirstName = "Олійник",
                             HireDate = new DateTime(2018, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsWarVeteran = false,
-                            MiddleName = "По-батькові9",
-                            Name = "Ім'я9",
-                            Position = "Викладач",
-                            Street = "Вулиця 9",
-                            Surname = "Прізвище9",
+                            MiddleName = "Сергійович",
+                            Position = "Доцент",
+                            Street = "вул. Незалежності, 9",
                             TIN = 5009,
-                            WorkExperience = 9
+                            WorkExperience = 9,
+                            lastName = "Сергій"
                         },
                         new
                         {
                             PassportNumber = 1010,
                             Category = "Основна",
-                            City = "Місто2",
-                            ContractEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ContractStartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            City = "Харків",
+                            ContractEndDate = new DateTime(2018, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ContractStartDate = new DateTime(2017, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DepartmentName = "Інформатика",
+                            FirstName = "Сорока",
                             HireDate = new DateTime(2017, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsWarVeteran = false,
-                            MiddleName = "По-батькові10",
-                            Name = "Ім'я10",
+                            MiddleName = "Анатоліївна",
                             Position = "Викладач",
-                            Street = "Вулиця 10",
-                            Surname = "Прізвище10",
+                            Street = "вул. Незалежності, 10",
                             TIN = 5010,
-                            WorkExperience = 10
+                            WorkExperience = 10,
+                            lastName = "Тетяна"
                         },
                         new
                         {
                             PassportNumber = 1011,
                             Category = "Основна",
-                            City = "Місто3",
-                            ContractEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ContractStartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            City = "Дніпро",
+                            ContractEndDate = new DateTime(2017, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ContractStartDate = new DateTime(2016, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DepartmentName = "Математика",
+                            FirstName = "Кравець",
                             HireDate = new DateTime(2016, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            IsWarVeteran = false,
-                            MiddleName = "По-батькові11",
-                            Name = "Ім'я11",
-                            Position = "Викладач",
-                            Street = "Вулиця 11",
-                            Surname = "Прізвище11",
+                            IsWarVeteran = true,
+                            MiddleName = "Юрійович",
+                            Position = "Асистент",
+                            Street = "вул. Незалежності, 11",
                             TIN = 5011,
-                            WorkExperience = 11
+                            WorkExperience = 11,
+                            lastName = "Юрій"
                         },
                         new
                         {
                             PassportNumber = 1012,
                             Category = "Основна",
-                            City = "Місто1",
-                            ContractEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ContractStartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            City = "Запоріжжя",
+                            ContractEndDate = new DateTime(2016, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ContractStartDate = new DateTime(2015, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DepartmentName = "Фізика",
+                            FirstName = "Романенко",
                             HireDate = new DateTime(2015, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsWarVeteran = false,
-                            MiddleName = "По-батькові12",
-                            Name = "Ім'я12",
-                            Position = "Викладач",
-                            Street = "Вулиця 12",
-                            Surname = "Прізвище12",
+                            MiddleName = "Світланівна",
+                            Position = "Доцент",
+                            Street = "вул. Незалежності, 12",
                             TIN = 5012,
-                            WorkExperience = 12
+                            WorkExperience = 12,
+                            lastName = "Світлана"
                         },
                         new
                         {
                             PassportNumber = 1013,
                             Category = "Основна",
-                            City = "Місто2",
-                            ContractEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ContractStartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            City = "Київ",
+                            ContractEndDate = new DateTime(2015, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ContractStartDate = new DateTime(2014, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DepartmentName = "Хімія",
+                            FirstName = "Іваненко",
                             HireDate = new DateTime(2014, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsWarVeteran = false,
-                            MiddleName = "По-батькові13",
-                            Name = "Ім'я13",
+                            MiddleName = "Віталійович",
                             Position = "Викладач",
-                            Street = "Вулиця 13",
-                            Surname = "Прізвище13",
+                            Street = "вул. Незалежності, 13",
                             TIN = 5013,
-                            WorkExperience = 13
+                            WorkExperience = 13,
+                            lastName = "Віталій"
                         },
                         new
                         {
                             PassportNumber = 1014,
                             Category = "Основна",
-                            City = "Місто3",
-                            ContractEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ContractStartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            City = "Львів",
+                            ContractEndDate = new DateTime(2014, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ContractStartDate = new DateTime(2013, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DepartmentName = "Біологія",
+                            FirstName = "Дмитренко",
                             HireDate = new DateTime(2013, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsWarVeteran = false,
-                            MiddleName = "По-батькові14",
-                            Name = "Ім'я14",
-                            Position = "Викладач",
-                            Street = "Вулиця 14",
-                            Surname = "Прізвище14",
+                            MiddleName = "Олександрівна",
+                            Position = "Асистент",
+                            Street = "вул. Незалежності, 14",
                             TIN = 5014,
-                            WorkExperience = 14
+                            WorkExperience = 14,
+                            lastName = "Оксана"
                         },
                         new
                         {
                             PassportNumber = 1015,
                             Category = "Основна",
-                            City = "Місто1",
-                            ContractEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ContractStartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            City = "Одеса",
+                            ContractEndDate = new DateTime(2013, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ContractStartDate = new DateTime(2012, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DepartmentName = "Інформатика",
+                            FirstName = "Бабенко",
                             HireDate = new DateTime(2012, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsWarVeteran = false,
-                            MiddleName = "По-батькові15",
-                            Name = "Ім'я15",
-                            Position = "Викладач",
-                            Street = "Вулиця 15",
-                            Surname = "Прізвище15",
+                            MiddleName = "Миколайович",
+                            Position = "Доцент",
+                            Street = "вул. Незалежності, 15",
                             TIN = 5015,
-                            WorkExperience = 15
+                            WorkExperience = 15,
+                            lastName = "Микола"
                         },
                         new
                         {
                             PassportNumber = 1016,
                             Category = "Основна",
-                            City = "Місто2",
-                            ContractEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ContractStartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            City = "Харків",
+                            ContractEndDate = new DateTime(2012, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ContractStartDate = new DateTime(2011, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DepartmentName = "Математика",
+                            FirstName = "Поліщук",
                             HireDate = new DateTime(2011, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            IsWarVeteran = false,
-                            MiddleName = "По-батькові16",
-                            Name = "Ім'я16",
+                            IsWarVeteran = true,
+                            MiddleName = "Ганнівна",
                             Position = "Викладач",
-                            Street = "Вулиця 16",
-                            Surname = "Прізвище16",
+                            Street = "вул. Незалежності, 16",
                             TIN = 5016,
-                            WorkExperience = 16
+                            WorkExperience = 16,
+                            lastName = "Ганна"
                         },
                         new
                         {
                             PassportNumber = 1017,
                             Category = "Основна",
-                            City = "Місто3",
-                            ContractEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ContractStartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            City = "Дніпро",
+                            ContractEndDate = new DateTime(2011, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ContractStartDate = new DateTime(2010, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DepartmentName = "Фізика",
+                            FirstName = "Сидоренко",
                             HireDate = new DateTime(2010, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsWarVeteran = false,
-                            MiddleName = "По-батькові17",
-                            Name = "Ім'я17",
-                            Position = "Викладач",
-                            Street = "Вулиця 17",
-                            Surname = "Прізвище17",
+                            MiddleName = "Романович",
+                            Position = "Асистент",
+                            Street = "вул. Незалежності, 17",
                             TIN = 5017,
-                            WorkExperience = 17
+                            WorkExperience = 17,
+                            lastName = "Роман"
                         },
                         new
                         {
                             PassportNumber = 1018,
                             Category = "Основна",
-                            City = "Місто1",
-                            ContractEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ContractStartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            City = "Запоріжжя",
+                            ContractEndDate = new DateTime(2010, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ContractStartDate = new DateTime(2009, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DepartmentName = "Хімія",
+                            FirstName = "Михайленко",
                             HireDate = new DateTime(2009, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsWarVeteran = false,
-                            MiddleName = "По-батькові18",
-                            Name = "Ім'я18",
-                            Position = "Викладач",
-                            Street = "Вулиця 18",
-                            Surname = "Прізвище18",
+                            MiddleName = "Людмилівна",
+                            Position = "Доцент",
+                            Street = "вул. Незалежності, 18",
                             TIN = 5018,
-                            WorkExperience = 18
+                            WorkExperience = 18,
+                            lastName = "Людмила"
                         },
                         new
                         {
                             PassportNumber = 1019,
                             Category = "Основна",
-                            City = "Місто2",
-                            ContractEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ContractStartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            City = "Київ",
+                            ContractEndDate = new DateTime(2009, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ContractStartDate = new DateTime(2008, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DepartmentName = "Біологія",
+                            FirstName = "Козак",
                             HireDate = new DateTime(2008, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsWarVeteran = false,
-                            MiddleName = "По-батькові19",
-                            Name = "Ім'я19",
+                            MiddleName = "Ігорович",
                             Position = "Викладач",
-                            Street = "Вулиця 19",
-                            Surname = "Прізвище19",
+                            Street = "вул. Незалежності, 19",
                             TIN = 5019,
-                            WorkExperience = 19
+                            WorkExperience = 19,
+                            lastName = "Ігор"
                         },
                         new
                         {
                             PassportNumber = 1020,
                             Category = "Основна",
-                            City = "Місто3",
-                            ContractEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ContractStartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            City = "Львів",
+                            ContractEndDate = new DateTime(2008, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ContractStartDate = new DateTime(2007, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DepartmentName = "Інформатика",
+                            FirstName = "Грищук",
                             HireDate = new DateTime(2007, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsWarVeteran = false,
-                            MiddleName = "По-батькові20",
-                            Name = "Ім'я20",
-                            Position = "Викладач",
-                            Street = "Вулиця 20",
-                            Surname = "Прізвище20",
+                            MiddleName = "Вікторівна",
+                            Position = "Асистент",
+                            Street = "вул. Незалежності, 20",
                             TIN = 5020,
-                            WorkExperience = 20
+                            WorkExperience = 20,
+                            lastName = "Вікторія"
                         });
                 });
 
@@ -530,7 +530,7 @@ namespace Institute.Migrations
                     b.HasData(
                         new
                         {
-                            Discipline = "Дисципліна1",
+                            Discipline = "Математика",
                             GroupNumber = 101,
                             PassportNumber = 1001,
                             DepartmentName = "Математика",
@@ -539,7 +539,7 @@ namespace Institute.Migrations
                         },
                         new
                         {
-                            Discipline = "Дисципліна2",
+                            Discipline = "Фізика",
                             GroupNumber = 102,
                             PassportNumber = 1002,
                             DepartmentName = "Фізика",
@@ -548,7 +548,7 @@ namespace Institute.Migrations
                         },
                         new
                         {
-                            Discipline = "Дисципліна3",
+                            Discipline = "Хімія",
                             GroupNumber = 103,
                             PassportNumber = 1003,
                             DepartmentName = "Хімія",
@@ -557,7 +557,7 @@ namespace Institute.Migrations
                         },
                         new
                         {
-                            Discipline = "Дисципліна4",
+                            Discipline = "Біологія",
                             GroupNumber = 104,
                             PassportNumber = 1004,
                             DepartmentName = "Біологія",
@@ -566,7 +566,7 @@ namespace Institute.Migrations
                         },
                         new
                         {
-                            Discipline = "Дисципліна5",
+                            Discipline = "Інформатика",
                             GroupNumber = 105,
                             PassportNumber = 1005,
                             DepartmentName = "Інформатика",
@@ -575,7 +575,7 @@ namespace Institute.Migrations
                         },
                         new
                         {
-                            Discipline = "Дисципліна6",
+                            Discipline = "Англійська мова",
                             GroupNumber = 106,
                             PassportNumber = 1006,
                             DepartmentName = "Математика",
@@ -584,7 +584,7 @@ namespace Institute.Migrations
                         },
                         new
                         {
-                            Discipline = "Дисципліна7",
+                            Discipline = "Історія",
                             GroupNumber = 107,
                             PassportNumber = 1007,
                             DepartmentName = "Фізика",
@@ -593,7 +593,7 @@ namespace Institute.Migrations
                         },
                         new
                         {
-                            Discipline = "Дисципліна8",
+                            Discipline = "Географія",
                             GroupNumber = 108,
                             PassportNumber = 1008,
                             DepartmentName = "Хімія",
@@ -602,7 +602,7 @@ namespace Institute.Migrations
                         },
                         new
                         {
-                            Discipline = "Дисципліна9",
+                            Discipline = "Література",
                             GroupNumber = 109,
                             PassportNumber = 1009,
                             DepartmentName = "Біологія",
@@ -611,7 +611,7 @@ namespace Institute.Migrations
                         },
                         new
                         {
-                            Discipline = "Дисципліна10",
+                            Discipline = "Механіка",
                             GroupNumber = 110,
                             PassportNumber = 1010,
                             DepartmentName = "Інформатика",
@@ -620,7 +620,7 @@ namespace Institute.Migrations
                         },
                         new
                         {
-                            Discipline = "Дисципліна11",
+                            Discipline = "Економіка",
                             GroupNumber = 111,
                             PassportNumber = 1011,
                             DepartmentName = "Математика",
@@ -629,7 +629,7 @@ namespace Institute.Migrations
                         },
                         new
                         {
-                            Discipline = "Дисципліна12",
+                            Discipline = "Правознавство",
                             GroupNumber = 112,
                             PassportNumber = 1012,
                             DepartmentName = "Фізика",
@@ -638,7 +638,7 @@ namespace Institute.Migrations
                         },
                         new
                         {
-                            Discipline = "Дисципліна13",
+                            Discipline = "Філософія",
                             GroupNumber = 113,
                             PassportNumber = 1013,
                             DepartmentName = "Хімія",
@@ -647,7 +647,7 @@ namespace Institute.Migrations
                         },
                         new
                         {
-                            Discipline = "Дисципліна14",
+                            Discipline = "Психологія",
                             GroupNumber = 114,
                             PassportNumber = 1014,
                             DepartmentName = "Біологія",
@@ -656,7 +656,7 @@ namespace Institute.Migrations
                         },
                         new
                         {
-                            Discipline = "Дисципліна15",
+                            Discipline = "Соціологія",
                             GroupNumber = 115,
                             PassportNumber = 1015,
                             DepartmentName = "Інформатика",
@@ -665,7 +665,7 @@ namespace Institute.Migrations
                         },
                         new
                         {
-                            Discipline = "Дисципліна16",
+                            Discipline = "Хімічна технологія",
                             GroupNumber = 116,
                             PassportNumber = 1016,
                             DepartmentName = "Математика",
@@ -674,7 +674,7 @@ namespace Institute.Migrations
                         },
                         new
                         {
-                            Discipline = "Дисципліна17",
+                            Discipline = "Екологія",
                             GroupNumber = 117,
                             PassportNumber = 1017,
                             DepartmentName = "Фізика",
@@ -683,7 +683,7 @@ namespace Institute.Migrations
                         },
                         new
                         {
-                            Discipline = "Дисципліна18",
+                            Discipline = "Технічна механіка",
                             GroupNumber = 118,
                             PassportNumber = 1018,
                             DepartmentName = "Хімія",
@@ -692,7 +692,7 @@ namespace Institute.Migrations
                         },
                         new
                         {
-                            Discipline = "Дисципліна19",
+                            Discipline = "Мікробіологія",
                             GroupNumber = 119,
                             PassportNumber = 1019,
                             DepartmentName = "Біологія",
@@ -701,7 +701,7 @@ namespace Institute.Migrations
                         },
                         new
                         {
-                            Discipline = "Дисципліна20",
+                            Discipline = "Геометрія",
                             GroupNumber = 120,
                             PassportNumber = 1020,
                             DepartmentName = "Інформатика",
@@ -727,202 +727,202 @@ namespace Institute.Migrations
                     b.HasData(
                         new
                         {
-                            PhoneNumber = "555-0101",
+                            PhoneNumber = "+380(67)123456700",
                             PassportNumber = 1001
                         },
                         new
                         {
-                            PhoneNumber = "555-0102",
+                            PhoneNumber = "+380(50)765432100",
                             PassportNumber = 1001
                         },
                         new
                         {
-                            PhoneNumber = "555-0103",
+                            PhoneNumber = "+380(67)123456701",
                             PassportNumber = 1002
                         },
                         new
                         {
-                            PhoneNumber = "555-0104",
+                            PhoneNumber = "+380(50)765432101",
                             PassportNumber = 1002
                         },
                         new
                         {
-                            PhoneNumber = "555-0105",
+                            PhoneNumber = "+380(67)123456702",
                             PassportNumber = 1003
                         },
                         new
                         {
-                            PhoneNumber = "555-0106",
+                            PhoneNumber = "+380(50)765432102",
                             PassportNumber = 1003
                         },
                         new
                         {
-                            PhoneNumber = "555-0107",
+                            PhoneNumber = "+380(67)123456703",
                             PassportNumber = 1004
                         },
                         new
                         {
-                            PhoneNumber = "555-0108",
+                            PhoneNumber = "+380(50)765432103",
                             PassportNumber = 1004
                         },
                         new
                         {
-                            PhoneNumber = "555-0109",
+                            PhoneNumber = "+380(67)123456704",
                             PassportNumber = 1005
                         },
                         new
                         {
-                            PhoneNumber = "555-01010",
+                            PhoneNumber = "+380(50)765432104",
                             PassportNumber = 1005
                         },
                         new
                         {
-                            PhoneNumber = "555-01011",
+                            PhoneNumber = "+380(67)123456705",
                             PassportNumber = 1006
                         },
                         new
                         {
-                            PhoneNumber = "555-01012",
+                            PhoneNumber = "+380(50)765432105",
                             PassportNumber = 1006
                         },
                         new
                         {
-                            PhoneNumber = "555-01013",
+                            PhoneNumber = "+380(67)123456706",
                             PassportNumber = 1007
                         },
                         new
                         {
-                            PhoneNumber = "555-01014",
+                            PhoneNumber = "+380(50)765432106",
                             PassportNumber = 1007
                         },
                         new
                         {
-                            PhoneNumber = "555-01015",
+                            PhoneNumber = "+380(67)123456707",
                             PassportNumber = 1008
                         },
                         new
                         {
-                            PhoneNumber = "555-01016",
+                            PhoneNumber = "+380(50)765432107",
                             PassportNumber = 1008
                         },
                         new
                         {
-                            PhoneNumber = "555-01017",
+                            PhoneNumber = "+380(67)123456708",
                             PassportNumber = 1009
                         },
                         new
                         {
-                            PhoneNumber = "555-01018",
+                            PhoneNumber = "+380(50)765432108",
                             PassportNumber = 1009
                         },
                         new
                         {
-                            PhoneNumber = "555-01019",
+                            PhoneNumber = "+380(67)123456709",
                             PassportNumber = 1010
                         },
                         new
                         {
-                            PhoneNumber = "555-01020",
+                            PhoneNumber = "+380(50)765432109",
                             PassportNumber = 1010
                         },
                         new
                         {
-                            PhoneNumber = "555-01021",
+                            PhoneNumber = "+380(67)123456710",
                             PassportNumber = 1011
                         },
                         new
                         {
-                            PhoneNumber = "555-01022",
+                            PhoneNumber = "+380(50)765432110",
                             PassportNumber = 1011
                         },
                         new
                         {
-                            PhoneNumber = "555-01023",
+                            PhoneNumber = "+380(67)123456711",
                             PassportNumber = 1012
                         },
                         new
                         {
-                            PhoneNumber = "555-01024",
+                            PhoneNumber = "+380(50)765432111",
                             PassportNumber = 1012
                         },
                         new
                         {
-                            PhoneNumber = "555-01025",
+                            PhoneNumber = "+380(67)123456712",
                             PassportNumber = 1013
                         },
                         new
                         {
-                            PhoneNumber = "555-01026",
+                            PhoneNumber = "+380(50)765432112",
                             PassportNumber = 1013
                         },
                         new
                         {
-                            PhoneNumber = "555-01027",
+                            PhoneNumber = "+380(67)123456713",
                             PassportNumber = 1014
                         },
                         new
                         {
-                            PhoneNumber = "555-01028",
+                            PhoneNumber = "+380(50)765432113",
                             PassportNumber = 1014
                         },
                         new
                         {
-                            PhoneNumber = "555-01029",
+                            PhoneNumber = "+380(67)123456714",
                             PassportNumber = 1015
                         },
                         new
                         {
-                            PhoneNumber = "555-01030",
+                            PhoneNumber = "+380(50)765432114",
                             PassportNumber = 1015
                         },
                         new
                         {
-                            PhoneNumber = "555-01031",
+                            PhoneNumber = "+380(67)123456715",
                             PassportNumber = 1016
                         },
                         new
                         {
-                            PhoneNumber = "555-01032",
+                            PhoneNumber = "+380(50)765432115",
                             PassportNumber = 1016
                         },
                         new
                         {
-                            PhoneNumber = "555-01033",
+                            PhoneNumber = "+380(67)123456716",
                             PassportNumber = 1017
                         },
                         new
                         {
-                            PhoneNumber = "555-01034",
+                            PhoneNumber = "+380(50)765432116",
                             PassportNumber = 1017
                         },
                         new
                         {
-                            PhoneNumber = "555-01035",
+                            PhoneNumber = "+380(67)123456717",
                             PassportNumber = 1018
                         },
                         new
                         {
-                            PhoneNumber = "555-01036",
+                            PhoneNumber = "+380(50)765432117",
                             PassportNumber = 1018
                         },
                         new
                         {
-                            PhoneNumber = "555-01037",
+                            PhoneNumber = "+380(67)123456718",
                             PassportNumber = 1019
                         },
                         new
                         {
-                            PhoneNumber = "555-01038",
+                            PhoneNumber = "+380(50)765432118",
                             PassportNumber = 1019
                         },
                         new
                         {
-                            PhoneNumber = "555-01039",
+                            PhoneNumber = "+380(67)123456719",
                             PassportNumber = 1020
                         },
                         new
                         {
-                            PhoneNumber = "555-01040",
+                            PhoneNumber = "+380(50)765432119",
                             PassportNumber = 1020
                         });
                 });
@@ -961,7 +961,7 @@ namespace Institute.Migrations
                         {
                             Id = new Guid("10000000-0000-0000-0000-000000000002"),
                             PassportNumber = 1002,
-                            ReferenceType = "Загальна",
+                            ReferenceType = "Спеціальна",
                             ReleaseDate = new DateTime(2026, 12, 1, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
@@ -975,7 +975,7 @@ namespace Institute.Migrations
                         {
                             Id = new Guid("10000000-0000-0000-0000-000000000004"),
                             PassportNumber = 1004,
-                            ReferenceType = "Загальна",
+                            ReferenceType = "Спеціальна",
                             ReleaseDate = new DateTime(2026, 10, 1, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
@@ -989,7 +989,7 @@ namespace Institute.Migrations
                         {
                             Id = new Guid("10000000-0000-0000-0000-000000000006"),
                             PassportNumber = 1006,
-                            ReferenceType = "Загальна",
+                            ReferenceType = "Спеціальна",
                             ReleaseDate = new DateTime(2026, 8, 1, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
@@ -1003,7 +1003,7 @@ namespace Institute.Migrations
                         {
                             Id = new Guid("10000000-0000-0000-0000-000000000008"),
                             PassportNumber = 1008,
-                            ReferenceType = "Загальна",
+                            ReferenceType = "Спеціальна",
                             ReleaseDate = new DateTime(2026, 6, 1, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
@@ -1017,7 +1017,7 @@ namespace Institute.Migrations
                         {
                             Id = new Guid("10000000-0000-0000-0000-000000000010"),
                             PassportNumber = 1010,
-                            ReferenceType = "Загальна",
+                            ReferenceType = "Спеціальна",
                             ReleaseDate = new DateTime(2026, 4, 1, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
@@ -1031,7 +1031,7 @@ namespace Institute.Migrations
                         {
                             Id = new Guid("10000000-0000-0000-0000-000000000012"),
                             PassportNumber = 1012,
-                            ReferenceType = "Загальна",
+                            ReferenceType = "Спеціальна",
                             ReleaseDate = new DateTime(2026, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
@@ -1045,7 +1045,7 @@ namespace Institute.Migrations
                         {
                             Id = new Guid("10000000-0000-0000-0000-000000000014"),
                             PassportNumber = 1014,
-                            ReferenceType = "Загальна",
+                            ReferenceType = "Спеціальна",
                             ReleaseDate = new DateTime(2025, 12, 1, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
@@ -1059,7 +1059,7 @@ namespace Institute.Migrations
                         {
                             Id = new Guid("10000000-0000-0000-0000-000000000016"),
                             PassportNumber = 1016,
-                            ReferenceType = "Загальна",
+                            ReferenceType = "Спеціальна",
                             ReleaseDate = new DateTime(2025, 10, 1, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
@@ -1073,7 +1073,7 @@ namespace Institute.Migrations
                         {
                             Id = new Guid("10000000-0000-0000-0000-000000000018"),
                             PassportNumber = 1018,
-                            ReferenceType = "Загальна",
+                            ReferenceType = "Спеціальна",
                             ReleaseDate = new DateTime(2025, 8, 1, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
@@ -1087,7 +1087,7 @@ namespace Institute.Migrations
                         {
                             Id = new Guid("10000000-0000-0000-0000-000000000020"),
                             PassportNumber = 1020,
-                            ReferenceType = "Загальна",
+                            ReferenceType = "Спеціальна",
                             ReleaseDate = new DateTime(2025, 6, 1, 0, 0, 0, 0, DateTimeKind.Utc)
                         });
                 });
@@ -1115,140 +1115,140 @@ namespace Institute.Migrations
                     b.HasData(
                         new
                         {
-                            VacationType = "Щорічна відпустка1",
+                            VacationType = "Щорічна відпустка",
                             PassportNumber = 1001,
                             EndDate = new DateTime(2027, 1, 11, 0, 0, 0, 0, DateTimeKind.Utc),
                             StartDate = new DateTime(2026, 12, 22, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
-                            VacationType = "Щорічна відпустка2",
+                            VacationType = "Відпустка за власний рахунок",
                             PassportNumber = 1002,
                             EndDate = new DateTime(2026, 12, 11, 0, 0, 0, 0, DateTimeKind.Utc),
                             StartDate = new DateTime(2026, 11, 21, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
-                            VacationType = "Щорічна відпустка3",
+                            VacationType = "Навчальна відпустка",
                             PassportNumber = 1003,
                             EndDate = new DateTime(2026, 11, 11, 0, 0, 0, 0, DateTimeKind.Utc),
                             StartDate = new DateTime(2026, 10, 22, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
-                            VacationType = "Щорічна відпустка4",
+                            VacationType = "Декретна відпустка",
                             PassportNumber = 1004,
                             EndDate = new DateTime(2026, 10, 11, 0, 0, 0, 0, DateTimeKind.Utc),
                             StartDate = new DateTime(2026, 9, 21, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
-                            VacationType = "Щорічна відпустка5",
+                            VacationType = "Відпустка по догляду за дитиною",
                             PassportNumber = 1005,
                             EndDate = new DateTime(2026, 9, 11, 0, 0, 0, 0, DateTimeKind.Utc),
                             StartDate = new DateTime(2026, 8, 22, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
-                            VacationType = "Щорічна відпустка6",
+                            VacationType = "Щорічна відпустка",
                             PassportNumber = 1006,
                             EndDate = new DateTime(2026, 8, 11, 0, 0, 0, 0, DateTimeKind.Utc),
                             StartDate = new DateTime(2026, 7, 22, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
-                            VacationType = "Щорічна відпустка7",
+                            VacationType = "Відпустка за власний рахунок",
                             PassportNumber = 1007,
                             EndDate = new DateTime(2026, 7, 11, 0, 0, 0, 0, DateTimeKind.Utc),
                             StartDate = new DateTime(2026, 6, 21, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
-                            VacationType = "Щорічна відпустка8",
+                            VacationType = "Навчальна відпустка",
                             PassportNumber = 1008,
                             EndDate = new DateTime(2026, 6, 11, 0, 0, 0, 0, DateTimeKind.Utc),
                             StartDate = new DateTime(2026, 5, 22, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
-                            VacationType = "Щорічна відпустка9",
+                            VacationType = "Декретна відпустка",
                             PassportNumber = 1009,
                             EndDate = new DateTime(2026, 5, 11, 0, 0, 0, 0, DateTimeKind.Utc),
                             StartDate = new DateTime(2026, 4, 21, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
-                            VacationType = "Щорічна відпустка10",
+                            VacationType = "Відпустка по догляду за дитиною",
                             PassportNumber = 1010,
                             EndDate = new DateTime(2026, 4, 11, 0, 0, 0, 0, DateTimeKind.Utc),
                             StartDate = new DateTime(2026, 3, 22, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
-                            VacationType = "Щорічна відпустка11",
+                            VacationType = "Щорічна відпустка",
                             PassportNumber = 1011,
                             EndDate = new DateTime(2026, 3, 11, 0, 0, 0, 0, DateTimeKind.Utc),
                             StartDate = new DateTime(2026, 2, 19, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
-                            VacationType = "Щорічна відпустка12",
+                            VacationType = "Відпустка за власний рахунок",
                             PassportNumber = 1012,
                             EndDate = new DateTime(2026, 2, 11, 0, 0, 0, 0, DateTimeKind.Utc),
                             StartDate = new DateTime(2026, 1, 22, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
-                            VacationType = "Щорічна відпустка13",
+                            VacationType = "Навчальна відпустка",
                             PassportNumber = 1013,
                             EndDate = new DateTime(2026, 1, 11, 0, 0, 0, 0, DateTimeKind.Utc),
                             StartDate = new DateTime(2025, 12, 22, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
-                            VacationType = "Щорічна відпустка14",
+                            VacationType = "Декретна відпустка",
                             PassportNumber = 1014,
                             EndDate = new DateTime(2025, 12, 11, 0, 0, 0, 0, DateTimeKind.Utc),
                             StartDate = new DateTime(2025, 11, 21, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
-                            VacationType = "Щорічна відпустка15",
+                            VacationType = "Відпустка по догляду за дитиною",
                             PassportNumber = 1015,
                             EndDate = new DateTime(2025, 11, 11, 0, 0, 0, 0, DateTimeKind.Utc),
                             StartDate = new DateTime(2025, 10, 22, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
-                            VacationType = "Щорічна відпустка16",
+                            VacationType = "Щорічна відпустка",
                             PassportNumber = 1016,
                             EndDate = new DateTime(2025, 10, 11, 0, 0, 0, 0, DateTimeKind.Utc),
                             StartDate = new DateTime(2025, 9, 21, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
-                            VacationType = "Щорічна відпустка17",
+                            VacationType = "Відпустка за власний рахунок",
                             PassportNumber = 1017,
                             EndDate = new DateTime(2025, 9, 11, 0, 0, 0, 0, DateTimeKind.Utc),
                             StartDate = new DateTime(2025, 8, 22, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
-                            VacationType = "Щорічна відпустка18",
+                            VacationType = "Навчальна відпустка",
                             PassportNumber = 1018,
                             EndDate = new DateTime(2025, 8, 11, 0, 0, 0, 0, DateTimeKind.Utc),
                             StartDate = new DateTime(2025, 7, 22, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
-                            VacationType = "Щорічна відпустка19",
+                            VacationType = "Декретна відпустка",
                             PassportNumber = 1019,
                             EndDate = new DateTime(2025, 7, 11, 0, 0, 0, 0, DateTimeKind.Utc),
                             StartDate = new DateTime(2025, 6, 21, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
-                            VacationType = "Щорічна відпустка20",
+                            VacationType = "Відпустка по догляду за дитиною",
                             PassportNumber = 1020,
                             EndDate = new DateTime(2025, 6, 11, 0, 0, 0, 0, DateTimeKind.Utc),
                             StartDate = new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Utc)

@@ -7,48 +7,76 @@ namespace Institute.Data
     {
         public static void Seed(ModelBuilder modelBuilder)
         {
-            // 5 відділів
             var departments = new[]
             {
-                new DepartmentEntity { DepartmentName = "Математика", Head = "Іванов І.І.", LecturerCount = 10 },
-                new DepartmentEntity { DepartmentName = "Фізика", Head = "Петров П.П.", LecturerCount = 8 },
-                new DepartmentEntity { DepartmentName = "Хімія", Head = "Сідоров С.С.", LecturerCount = 7 },
-                new DepartmentEntity { DepartmentName = "Біологія", Head = "Кузнецов К.К.", LecturerCount = 5 },
-                new DepartmentEntity { DepartmentName = "Інформатика", Head = "Смирнов С.С.", LecturerCount = 12 }
+                new DepartmentEntity { DepartmentName = "Математика", Head = "Іваненко О.П.", LecturerCount = 10 },
+                new DepartmentEntity { DepartmentName = "Фізика", Head = "Ковальчук С.В.", LecturerCount = 8 },
+                new DepartmentEntity { DepartmentName = "Хімія", Head = "Шевченко М.В.", LecturerCount = 7 },
+                new DepartmentEntity { DepartmentName = "Біологія", Head = "Петренко І.Д.", LecturerCount = 5 },
+                new DepartmentEntity { DepartmentName = "Інформатика", Head = "Ткаченко Н.С.", LecturerCount = 12 }
             };
             modelBuilder.Entity<DepartmentEntity>().HasData(departments);
 
             var baseDate = DateTime.SpecifyKind(new DateTime(2027, 1, 1), DateTimeKind.Utc);
 
-            // 20 співробітників
+            string[] surnames = {
+                "Коваленко", "Шевчук", "Бондаренко", "Лисенко", "Мельник", "Ткач", "Гончар", "Кузьменко", "Олійник", "Сорока",
+                "Кравець", "Романенко", "Іваненко", "Дмитренко", "Бабенко", "Поліщук", "Сидоренко", "Михайленко", "Козак", "Грищук"
+            };
+
+            string[] names = {
+                "Олександр", "Марина", "Віктор", "Ірина", "Андрій", "Олена", "Володимир", "Наталія", "Сергій", "Тетяна",
+                "Юрій", "Світлана", "Віталій", "Оксана", "Микола", "Ганна", "Роман", "Людмила", "Ігор", "Вікторія"
+            };
+
+            string[] middlenames = {
+                "Олександрович", "Петрівна", "Вікторович", "Ігорівна", "Андрійович", "Олексіївна", "Володимирович", "Петрівна", "Сергійович", "Анатоліївна",
+                "Юрійович", "Світланівна", "Віталійович", "Олександрівна", "Миколайович", "Ганнівна", "Романович", "Людмилівна", "Ігорович", "Вікторівна"
+            };
+
+            string[] cities = { "Київ", "Львів", "Одеса", "Харків", "Дніпро", "Запоріжжя" };
+
+            string[] positions = { "Викладач", "Асистент", "Доцент" };
+
             var employees = new List<EmployeeEntity>();
-            for (int i = 1; i <= 20; i++)
+            for (int i = 0; i < 20; i++)
             {
                 employees.Add(new EmployeeEntity
                 {
-                    PassportNumber = 1000 + i,
-                    TIN = 5000 + i,
-                    Surname = $"Прізвище{i}",
-                    Name = $"Ім'я{i}",
-                    MiddleName = $"По-батькові{i}",
-                    DepartmentName = departments[(i - 1) % departments.Length].DepartmentName,
-                    Position = "Викладач",
-                    Category = "Основна", // добавлено обязательное поле Category
-                    HireDate = baseDate.AddYears(-i), // 2026, 2025, ... 2007
-                    WorkExperience = i,
-                    City = $"Місто{(i % 3) + 1}",
-                    Street = $"Вулиця {i}"
+                    PassportNumber = 1000 + i + 1,
+                    TIN = 5000 + i + 1,
+                    FirstName = surnames[i],
+                    lastName = names[i],
+                    MiddleName = middlenames[i],
+                    DepartmentName = departments[i % departments.Length].DepartmentName,
+                    Position = positions[i % positions.Length],
+                    Category = "Основна",
+                    HireDate = baseDate.AddYears(-(i + 1)),
+                    WorkExperience = i + 1,
+                    City = cities[i % cities.Length],
+                    Street = $"вул. Незалежності, {i + 1}",
+
+                    ContractStartDate = baseDate.AddYears(-(i + 1)).AddMonths(1),
+                    ContractEndDate = baseDate.AddYears(-(i + 1)).AddYears(1),
+                    IsWarVeteran = (i % 5 == 0)
                 });
             }
             modelBuilder.Entity<EmployeeEntity>().HasData(employees);
 
-            // Педагогічні навантаження (20 шт)
+            var disciplines = new[]
+            {
+                "Математика", "Фізика", "Хімія", "Біологія", "Інформатика",
+                "Англійська мова", "Історія", "Географія", "Література", "Механіка",
+                "Економіка", "Правознавство", "Філософія", "Психологія", "Соціологія",
+                "Хімічна технологія", "Екологія", "Технічна механіка", "Мікробіологія", "Геометрія"
+            };
+
             var pedagogicalLoads = new List<PedagogicalLoadEntity>();
             for (int i = 0; i < 20; i++)
             {
                 pedagogicalLoads.Add(new PedagogicalLoadEntity
                 {
-                    Discipline = $"Дисципліна{i + 1}",
+                    Discipline = disciplines[i % disciplines.Length],
                     GroupNumber = 101 + i,
                     PassportNumber = employees[i].PassportNumber,
                     DepartmentName = employees[i].DepartmentName,
@@ -58,24 +86,22 @@ namespace Institute.Data
             }
             modelBuilder.Entity<PedagogicalLoadEntity>().HasData(pedagogicalLoads);
 
-            // Телефони — по 2 на кожного співробітника
             var phones = new List<PhoneEmployeeEntity>();
             for (int i = 0; i < 20; i++)
             {
                 phones.Add(new PhoneEmployeeEntity
                 {
-                    PhoneNumber = $"555-010{i * 2 + 1}",
+                    PhoneNumber = $"+380(67)1234567{i:00}",
                     PassportNumber = employees[i].PassportNumber
                 });
                 phones.Add(new PhoneEmployeeEntity
                 {
-                    PhoneNumber = $"555-010{i * 2 + 2}",
+                    PhoneNumber = $"+380(50)7654321{i:00}",
                     PassportNumber = employees[i].PassportNumber
                 });
             }
             modelBuilder.Entity<PhoneEmployeeEntity>().HasData(phones);
 
-            // Довідки — по 1 на співробітника
             var references = new List<ReferencesEntity>();
             for (int i = 0; i < 20; i++)
             {
@@ -83,19 +109,27 @@ namespace Institute.Data
                 {
                     Id = Guid.Parse($"10000000-0000-0000-0000-0000000000{i + 1:00}"),
                     PassportNumber = employees[i].PassportNumber,
-                    ReleaseDate = baseDate.AddMonths(-i), // 2027-01-01, 2026-12-01, ...
-                    ReferenceType = "Загальна"
+                    ReleaseDate = baseDate.AddMonths(-i),
+                    ReferenceType = i % 2 == 0 ? "Загальна" : "Спеціальна"
                 });
             }
             modelBuilder.Entity<ReferencesEntity>().HasData(references);
 
-            // Відпустки — по 1 на співробітника
+            var vacationTypes = new[]
+            {
+                "Щорічна відпустка",
+                "Відпустка за власний рахунок",
+                "Навчальна відпустка",
+                "Декретна відпустка",
+                "Відпустка по догляду за дитиною"
+            };
+
             var vacations = new List<VacationEntity>();
             for (int i = 0; i < 20; i++)
             {
                 vacations.Add(new VacationEntity
                 {
-                    VacationType = $"Щорічна відпустка{i + 1}",
+                    VacationType = vacationTypes[i % vacationTypes.Length],
                     PassportNumber = employees[i].PassportNumber,
                     StartDate = baseDate.AddMonths(-i).AddDays(-10),
                     EndDate = baseDate.AddMonths(-i).AddDays(10)

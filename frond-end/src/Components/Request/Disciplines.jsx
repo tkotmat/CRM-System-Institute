@@ -1,133 +1,140 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getRequest } from "../apiService";
 
 const Disciplines = () => {
-    const [disciplinesList, setDisciplinesList] = useState([]);
-    const [discipline, setDiscipline] = useState("");
-    const [teachers, setTeachers] = useState([]);
-    const [loadingDisciplines, setLoadingDisciplines] = useState(false);
-    const [loadingTeachers, setLoadingTeachers] = useState(false);
+    const [employees, setEmployees] = useState([]);
+    const [loadData, setLoadData] = useState([]);
+    const [combinedData, setCombinedData] = useState([]);
+    const [selectedDiscipline, setSelectedDiscipline] = useState("");
+    const [disciplines, setDisciplines] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Загрузка списка дисциплин при монтировании
     useEffect(() => {
-        const fetchDisciplines = async () => {
-            setLoadingDisciplines(true);
-            setError(null);
+        const fetchData = async () => {
             try {
-                const data = await getRequest("/api/Department");
-                setDisciplinesList(data);
+                const [empRes, loadRes] = await Promise.all([
+                    getRequest("/api/Employee"),
+                    getRequest("/api/PedagogicalLoad"),
+                ]);
+                setEmployees(empRes);
+                setLoadData(loadRes);
+
+                const uniqueDisciplines = [
+                    ...new Set(loadRes.map((item) => item.discipline)),
+                ];
+                setDisciplines(uniqueDisciplines);
+
+                const merged = loadRes
+                    .map((load) => {
+                        const emp = empRes.find(
+                            (e) => e.passportNumber === load.passportNumber
+                        );
+                        if (!emp) return null;
+
+                        return {
+                            discipline: load.discipline,
+                            fullName: `${emp.surname} ${emp.name} ${emp.middleName}`,
+                            contractStartDate: emp.contractStartDate,
+                        };
+                    })
+                    .filter(Boolean);
+
+                setCombinedData(merged);
             } catch (err) {
-                setError("Ошибка при загрузке списка дисциплин");
+                console.error(err);
+                setError("Помилка при завантаженні даних.");
             } finally {
-                setLoadingDisciplines(false);
+                setLoading(false);
             }
         };
-        fetchDisciplines();
+
+        fetchData();
     }, []);
 
-    const fetchTeachers = async (selectedDiscipline) => {
-        if (!selectedDiscipline) {
-            setError("Выберите дисциплину");
-            setTeachers([]);
-            return;
-        }
-        setLoadingTeachers(true);
-        setError(null);
-        setTeachers([]);
-        try {
-            const data = await getRequest(
-                `/api/teachers/by-discipline?name=${encodeURIComponent(
-                    selectedDiscipline
-                )}`
-            );
-            setTeachers(data);
-        } catch (err) {
-            setError("Ошибка при загрузке преподавателей");
-        } finally {
-            setLoadingTeachers(false);
-        }
-    };
+    const filtered =
+        selectedDiscipline === ""
+            ? []
+            : combinedData.filter(
+                  (item) => item.discipline === selectedDiscipline
+              );
 
-    const onDisciplineChange = (e) => {
-        const selected = e.target.value;
-        setDiscipline(selected);
-        fetchTeachers(selected);
+    const formatDate = (dateStr) => {
+        if (!dateStr || dateStr === "0001-01-01T00:00:00") return "-";
+        return new Date(dateStr).toLocaleDateString();
     };
 
     return (
-        <div className='p-4 text-white bg-[#121212] min-h-screen'>
-            <h1 className='text-2xl mb-4'>Преподаватели по дисциплине</h1>
+        <div className='bg-[#121212] font-sans min-h-screen text-[#D1D5DB] p-6'>
+            <h1 className='text-2xl font-bold mb-6 text-white'>
+                Працівники за дисципліною
+            </h1>
 
-            <div className='mb-4 flex gap-2 items-center'>
-                <label htmlFor='discipline-select' className='mr-2'>
-                    Выберите дисциплину:
-                </label>
+            <select
+                value={selectedDiscipline}
+                onChange={(e) => setSelectedDiscipline(e.target.value)}
+                className='mb-6 w-full max-w-xl px-4 py-2 bg-[#121212] border border-[#3C4D6B] rounded text-white focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
+            >
+                <option value=''>Оберіть дисципліну</option>
+                {disciplines.map((d, idx) => (
+                    <option key={idx} value={d}>
+                        {d}
+                    </option>
+                ))}
+            </select>
 
-                {loadingDisciplines ? (
-                    <p>Загрузка списка дисциплин...</p>
-                ) : (
-                    <select
-                        id='discipline-select'
-                        value={discipline}
-                        onChange={onDisciplineChange}
-                        className='p-2 rounded border border-gray-600 bg-[#1E293B] text-white'
-                    >
-                        <option value=''>-- Выберите дисциплину --</option>
-                        {disciplinesList.map((d, index) => {
-                            // Безопасное получение id и name, на случай, если d - объект с такими полями
-                            const key = d?.id ?? index;
-                            const name =
-                                typeof d === "object"
-                                    ? d?.name ?? "Без названия"
-                                    : d;
-                            return (
-                                <option key={key} value={name}>
-                                    {name}
-                                </option>
-                            );
-                        })}
-                    </select>
-                )}
-            </div>
-
-            {error && <p className='text-red-500 mb-4'>{error}</p>}
-
-            {loadingTeachers && <p>Загрузка преподавателей...</p>}
-
-            {!loadingTeachers && teachers.length === 0 && !error && (
-                <p className='italic text-gray-400'>
-                    Выберите дисциплину для отображения преподавателей
+            {loading ? (
+                <p className='text-white'>Завантаження...</p>
+            ) : error ? (
+                <p className='text-red-500'>{error}</p>
+            ) : selectedDiscipline === "" ? (
+                <p className='italic text-[#BFA18D]'>
+                    Оберіть дисципліну зі списку
                 </p>
-            )}
-
-            {teachers.length > 0 && (
-                <table className='w-full text-left border-collapse border border-gray-600'>
-                    <thead>
-                        <tr className='bg-[#1E293B]'>
-                            <th className='border border-gray-600 p-2'>ФИО</th>
-                            <th className='border border-gray-600 p-2'>
-                                Кафедра
-                            </th>
-                            <th className='border border-gray-600 p-2'>
-                                Должность
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {teachers.map((teacher) => (
-                            <tr key={teacher.id} className='hover:bg-[#374151]'>
-                                <td className='border border-gray-600 p-2'>{`${teacher.surname} ${teacher.name} ${teacher.middleName}`}</td>
-                                <td className='border border-gray-600 p-2'>
-                                    {teacher.departmentName}
-                                </td>
-                                <td className='border border-gray-600 p-2'>
-                                    {teacher.position}
-                                </td>
+            ) : filtered.length === 0 ? (
+                <p className='italic text-[#BFA18D]'>
+                    Немає даних за вибраною дисципліною
+                </p>
+            ) : (
+                <div className='max-w-6xl overflow-x-auto rounded-lg border border-[#3C4D6B] bg-[#171F2F] shadow-lg'>
+                    <table className='w-full table-auto border-collapse text-[#D1D5DB]'>
+                        <thead>
+                            <tr className='bg-[#101828]'>
+                                <th className='py-3 px-6 border-b border-[#3C4D6B] text-left'>
+                                    ПІБ
+                                </th>
+                                <th className='py-3 px-6 border-b border-[#3C4D6B] text-left'>
+                                    Дисципліна
+                                </th>
+                                <th className='py-3 px-6 border-b border-[#3C4D6B] text-left'>
+                                    Дата прийому
+                                </th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {filtered.map((item, idx) => (
+                                <tr
+                                    key={`${item.fullName}-${item.discipline}-${idx}`}
+                                    className={`${
+                                        idx % 2 === 0
+                                            ? "bg-[#1C263A]"
+                                            : "bg-[#141C2B]"
+                                    } hover:bg-[#2F3F5B] transition-colors`}
+                                >
+                                    <td className='py-3 px-6 border-b border-[#3C4D6B]'>
+                                        {item.fullName}
+                                    </td>
+                                    <td className='py-3 px-6 border-b border-[#3C4D6B]'>
+                                        {item.discipline}
+                                    </td>
+                                    <td className='py-3 px-6 border-b border-[#3C4D6B]'>
+                                        {formatDate(item.contractStartDate)}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             )}
         </div>
     );

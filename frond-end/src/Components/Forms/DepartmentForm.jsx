@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { postRequest } from "../apiService";
 
 const initialForm = {
     DepartmentName: "",
@@ -23,12 +22,12 @@ const DepartmentForm = () => {
         e.preventDefault();
 
         if (!form.DepartmentName.trim()) {
-            alert("Введите название отдела");
+            alert("Введіть назву відділу");
             return;
         }
 
         if (!form.Head.trim()) {
-            alert("Введите ФИО руководителя");
+            alert("Введіть ПІБ керівника");
             return;
         }
 
@@ -37,30 +36,44 @@ const DepartmentForm = () => {
             isNaN(form.LecturerCount) ||
             form.LecturerCount <= 0
         ) {
-            alert("Введите корректное количество преподавателей");
+            alert("Введіть коректну кількість викладачів");
             return;
         }
 
         const newDepartment = {
-            DepartmentName: form.DepartmentName,
-            Head: form.Head,
+            DepartmentName: form.DepartmentName.trim(),
+            Head: form.Head.trim(),
             LecturerCount: Number(form.LecturerCount),
         };
 
         try {
-            const result = await postRequest("/api/Department", newDepartment);
-            console.log("Отдел успешно добавлен:", result);
-            alert("Отдел успешно добавлен!");
+            const response = await fetch("/api/Department", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(newDepartment),
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(errorText || "Помилка при додаванні відділу");
+            }
+
+            const data = await response.json();
+            console.log("Відділ додано:", data);
+            alert("Відділ успішно додано!");
             handleReset();
         } catch (error) {
-            alert("Ошибка при добавлении отдела. Подробности в консоли.");
+            console.error("Помилка при додаванні:", error);
+            alert(`Помилка при додаванні: ${error.message}`);
         }
     };
 
     return (
         <div className='max-w-4xl mx-auto p-6 mb-8 mt-10 bg-[#1C263A] border border-[#3C4D6B] rounded-lg shadow-lg text-[#D1D5DB]'>
             <h2 className='text-xl font-semibold mb-6 text-white'>
-                Добавить отдел
+                Додати відділ
             </h2>
             <form
                 onSubmit={handleSubmit}
@@ -71,7 +84,7 @@ const DepartmentForm = () => {
                         htmlFor='DepartmentName'
                         className='block text-[#AFC6E0] mb-1'
                     >
-                        Название отдела *
+                        Назва відділу *
                     </label>
                     <input
                         id='DepartmentName'
@@ -79,7 +92,7 @@ const DepartmentForm = () => {
                         type='text'
                         value={form.DepartmentName}
                         onChange={handleChange}
-                        placeholder='Гуманитарный'
+                        placeholder='Гуманітарний'
                         className='w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] rounded text-white focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
                         required
                     />
@@ -87,7 +100,7 @@ const DepartmentForm = () => {
 
                 <div>
                     <label htmlFor='Head' className='block text-[#AFC6E0] mb-1'>
-                        Руководитель отдела *
+                        Керівник відділу *
                     </label>
                     <input
                         id='Head'
@@ -95,7 +108,7 @@ const DepartmentForm = () => {
                         type='text'
                         value={form.Head}
                         onChange={handleChange}
-                        placeholder='Петрова Анна Сергеевна'
+                        placeholder='Петрова Анна Сергіївна'
                         className='w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] rounded text-white focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
                         required
                     />
@@ -106,7 +119,7 @@ const DepartmentForm = () => {
                         htmlFor='LecturerCount'
                         className='block text-[#AFC6E0] mb-1'
                     >
-                        Количество преподавателей *
+                        Кількість викладачів *
                     </label>
                     <input
                         id='LecturerCount'
@@ -127,13 +140,13 @@ const DepartmentForm = () => {
                         onClick={handleReset}
                         className='bg-[#3C4D6B] hover:bg-[#586A91] text-white font-semibold py-2 px-6 rounded transition'
                     >
-                        Очистить
+                        Очистити
                     </button>
                     <button
                         type='submit'
                         className='bg-[#E6A17E] hover:bg-[#C77C4E] text-[#121212] font-semibold py-2 px-6 rounded transition'
                     >
-                        Добавить
+                        Додати
                     </button>
                 </div>
             </form>

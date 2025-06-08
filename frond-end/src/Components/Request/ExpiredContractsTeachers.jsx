@@ -1,71 +1,123 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getRequest } from "../apiService";
 
-const ExpiredContractsTeachers = () => {
-    const [teachers, setTeachers] = useState([]);
-    const [loading, setLoading] = useState(true);
+const ExpiredContractTeachers = () => {
+    const [expiredTeachers, setExpiredTeachers] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [filterDate, setFilterDate] = useState(() => {
-        // по умолчанию - сегодня в формате YYYY-MM-DD для input[type=date]
-        const today = new Date();
-        return today.toISOString().slice(0, 10);
-    });
 
     useEffect(() => {
-        const fetchEmployees = async () => {
+        const fetchExpiredTeachers = async () => {
+            setLoading(true);
+            setError(null);
+
             try {
-                const data = await getRequest("/api/Employee");
-                setTeachers(data);
+                const employees = await getRequest("/api/Employee");
+                const now = new Date();
+
+                const expired = employees.filter((emp) => {
+                    if (!emp.contractEndDate) return false;
+
+                    const endDate = new Date(emp.contractEndDate);
+
+                    const isDefaultDate =
+                        endDate.getFullYear() === 1 &&
+                        endDate.getMonth() === 0 &&
+                        endDate.getDate() === 1;
+
+                    return !isDefaultDate && endDate < now;
+                });
+
+                setExpiredTeachers(expired);
             } catch (err) {
-                setError("Ошибка при загрузке данных преподавателей.");
+                console.error("Помилка при завантаженні даних:", err);
+                setError("Помилка при завантаженні даних.");
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchEmployees();
+        fetchExpiredTeachers();
     }, []);
 
-    if (loading) return <p>Загрузка...</p>;
-    if (error) return <p style={{ color: "red" }}>{error}</p>;
-
-    // Парсим выбранную дату для сравнения
-    const filterDateObj = new Date(filterDate);
-
-    // Фильтруем преподавателей с contractEndDate меньше выбранной даты
-    const expiredTeachers = teachers.filter((t) => {
-        if (!t.contractEndDate) return false;
-        return new Date(t.contractEndDate) < filterDateObj;
-    });
+    const formatDate = (dateStr) => {
+        if (!dateStr || dateStr === "0001-01-01T00:00:00") return "-";
+        const d = new Date(dateStr);
+        return d.toLocaleDateString();
+    };
 
     return (
-        <div>
-            <h2>Преподаватели с истекшим сроком контракта</h2>
+        <div className='bg-[#121212] font-sans min-h-screen text-[#D1D5DB] p-6'>
+            <h1 className='text-2xl font-bold mb-6 text-white'>
+                Вчителі з простроченим контрактом
+            </h1>
 
-            <label>
-                Показать преподавателей с контрактом, истекшим до даты:{" "}
-                <input
-                    type='date'
-                    value={filterDate}
-                    onChange={(e) => setFilterDate(e.target.value)}
-                />
-            </label>
-
-            {expiredTeachers.length === 0 ? (
-                <p>Преподавателей с истекшим контрактом нет.</p>
+            {loading ? (
+                <p className='text-white'>Завантаження...</p>
+            ) : error ? (
+                <p className='text-red-400'>{error}</p>
+            ) : expiredTeachers.length === 0 ? (
+                <p className='text-[#BFA18D] italic'>
+                    Немає прострочених контрактів
+                </p>
             ) : (
-                <ul>
-                    {expiredTeachers.map((t) => (
-                        <li key={t.id}>
-                            {t.surname} {t.name} {t.middleName} — Должность:{" "}
-                            {t.position} — Контракт закончился:{" "}
-                            {new Date(t.contractEndDate).toLocaleDateString()}
-                        </li>
-                    ))}
-                </ul>
+                <div className='max-w-6xl overflow-x-auto rounded-lg border border-[#3C4D6B] bg-[#171F2F] shadow-lg'>
+                    <table className='w-full table-auto border-collapse text-[#D1D5DB]'>
+                        <thead>
+                            <tr className='bg-[#101828]'>
+                                <th className='py-3 px-6 border-b border-[#3C4D6B] text-left'>
+                                    ПІБ
+                                </th>
+                                <th className='py-3 px-6 border-b border-[#3C4D6B] text-left'>
+                                    Паспорт
+                                </th>
+                                <th className='py-3 px-6 border-b border-[#3C4D6B] text-left'>
+                                    Кафедра
+                                </th>
+                                <th className='py-3 px-6 border-b border-[#3C4D6B] text-left'>
+                                    Посада
+                                </th>
+                                <th className='py-3 px-6 border-b border-[#3C4D6B] text-left'>
+                                    Дата закінчення контракту
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {expiredTeachers.map((emp, index) => {
+                                const fullName = `${emp.surname} ${emp.name} ${emp.middleName}`;
+                                return (
+                                    <tr
+                                        key={`${emp.passportNumber}-${index}`}
+                                        className={`${
+                                            index % 2 === 0
+                                                ? "bg-[#1C263A]"
+                                                : "bg-[#141C2B]"
+                                        } hover:bg-[#2F3F5B] transition-colors duration-200`}
+                                    >
+                                        <td className='py-3 px-6 border-b border-[#3C4D6B]'>
+                                            {fullName}
+                                        </td>
+                                        <td className='py-3 px-6 border-b border-[#3C4D6B]'>
+                                            {emp.passportNumber}
+                                        </td>
+                                        <td className='py-3 px-6 border-b border-[#3C4D6B]'>
+                                            {emp.departmentName}
+                                        </td>
+                                        <td className='py-3 px-6 border-b border-[#3C4D6B]'>
+                                            {emp.position}
+                                        </td>
+                                        <td className='py-3 px-6 border-b border-[#3C4D6B]'>
+                                            {formatDate(emp.contractEndDate)}
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                </div>
             )}
         </div>
     );
 };
 
-export default ExpiredContractsTeachers;
+export default ExpiredContractTeachers;

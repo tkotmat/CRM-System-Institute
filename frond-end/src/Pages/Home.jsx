@@ -1,4 +1,3 @@
-import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Layout from "../Components/Layout";
 
@@ -32,10 +31,7 @@ const Home = () => {
             <Layout />
             <main className='flex-1 p-6 mt-16 ml-64 min-h-screen'>
                 <Routes>
-                    <Route
-                        path='/'
-                        element={<p>Добро пожаловать в админку!</p>}
-                    />
+                    <Route path='/' element={<p></p>} />
                     <Route
                         path='/tables/employeers'
                         element={<EmloyeerTables />}
