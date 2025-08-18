@@ -1,2 +1,2 @@
 # CRM-System-Institute
-full stack freelance project EMP System for institute.
+CRM-System-Institute is a full-stack CRM system for managing students, staff, and institutional processes with analytics, finance, and role-based access control.
