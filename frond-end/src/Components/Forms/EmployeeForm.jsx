@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { Save } from "lucide-react";
-import { getRequest } from "../apiService";
+import { getRequest, postRequest } from "../apiService";
 
 const positions = ["асистент", "викладач", "доцент"];
 
@@ -25,8 +24,7 @@ const initialFormState = {
 const Employees = () => {
     const [departments, setDepartments] = useState([]);
     const [form, setForm] = useState(initialFormState);
-
-    const apiUrl = "https://localhost:7032/api/Employee";
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchDepartments = async () => {
@@ -43,12 +41,13 @@ const Employees = () => {
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-        if (type === "checkbox") {
-            setForm((prev) => ({ ...prev, [name]: checked }));
-        } else {
-            setForm((prev) => ({ ...prev, [name]: value }));
-        }
+        setForm((prev) => ({
+            ...prev,
+            [name]: type === "checkbox" ? checked : value,
+        }));
     };
+
+    const handleReset = () => setForm(initialFormState);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -75,27 +74,30 @@ const Employees = () => {
         };
 
         try {
-            await axios.post(apiUrl, payload);
+            setLoading(true);
+            await postRequest("/api/Employee", payload);
             alert("Працівник успішно доданий!");
-            setForm(initialFormState);
+            handleReset();
         } catch (error) {
             console.error(
                 "Помилка при додаванні працівника:",
                 error.response?.data || error.message
             );
             alert("Помилка при відправці даних. Спробуйте пізніше.");
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <div className='max-w-3xl mx-auto p-6 mt-10 bg-[#1C263A] border border-[#3C4D6B] rounded-lg shadow-lg text-[#D1D5DB]'>
-            <h2 className='text-xl font-semibold mb-6 text-white'>
+        <div className="max-w-3xl mx-auto p-6 mt-10 bg-[#1C263A] border border-[#3C4D6B] rounded-lg shadow-lg text-[#D1D5DB]">
+            <h2 className="text-xl font-semibold mb-6 text-white">
                 Додати працівника
             </h2>
 
             <form
                 onSubmit={handleSubmit}
-                className='grid grid-cols-1 md:grid-cols-2 gap-4'
+                className="grid grid-cols-1 md:grid-cols-2 gap-4"
             >
                 {Object.entries({
                     PassportNumber: "Паспорт",
@@ -116,17 +118,17 @@ const Employees = () => {
                     if (key === "DepartmentName") {
                         return (
                             <div key={key}>
-                                <label className='block text-[#AFC6E0] mb-1'>
+                                <label className="block text-[#AFC6E0] mb-1">
                                     {label}
                                 </label>
                                 <select
                                     name={key}
                                     value={form[key]}
                                     onChange={handleChange}
-                                    className='w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] text-white rounded focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
+                                    className="w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] text-white rounded focus:outline-none focus:ring-2 focus:ring-[#E6A17E]"
                                     required
                                 >
-                                    <option value=''>Виберіть відділ</option>
+                                    <option value="">Виберіть відділ</option>
                                     {departments.map((dep) => (
                                         <option
                                             key={dep.id}
@@ -143,17 +145,17 @@ const Employees = () => {
                     if (key === "Position") {
                         return (
                             <div key={key}>
-                                <label className='block text-[#AFC6E0] mb-1'>
+                                <label className="block text-[#AFC6E0] mb-1">
                                     {label}
                                 </label>
                                 <select
                                     name={key}
                                     value={form[key]}
                                     onChange={handleChange}
-                                    className='w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] text-white rounded focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
+                                    className="w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] text-white rounded focus:outline-none focus:ring-2 focus:ring-[#E6A17E]"
                                     required
                                 >
-                                    <option value=''>Виберіть посаду</option>
+                                    <option value="">Виберіть посаду</option>
                                     {positions.map((pos) => (
                                         <option key={pos} value={pos}>
                                             {pos}
@@ -167,16 +169,16 @@ const Employees = () => {
                     if (key === "WorkExperience") {
                         return (
                             <div key={key}>
-                                <label className='block text-[#AFC6E0] mb-1'>
+                                <label className="block text-[#AFC6E0] mb-1">
                                     {label}
                                 </label>
                                 <input
-                                    type='number'
+                                    type="number"
                                     name={key}
                                     value={form[key]}
                                     onChange={handleChange}
                                     placeholder={`Введіть ${label.toLowerCase()}`}
-                                    className='w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] text-white rounded focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
+                                    className="w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] text-white rounded focus:outline-none focus:ring-2 focus:ring-[#E6A17E]"
                                     required
                                 />
                             </div>
@@ -189,15 +191,15 @@ const Employees = () => {
                     ) {
                         return (
                             <div key={key}>
-                                <label className='block text-[#AFC6E0] mb-1'>
+                                <label className="block text-[#AFC6E0] mb-1">
                                     {label}
                                 </label>
                                 <input
-                                    type='date'
+                                    type="date"
                                     name={key}
                                     value={form[key]}
                                     onChange={handleChange}
-                                    className='w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] text-white rounded focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
+                                    className="w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] text-white rounded focus:outline-none focus:ring-2 focus:ring-[#E6A17E]"
                                     required
                                 />
                             </div>
@@ -206,15 +208,15 @@ const Employees = () => {
 
                     if (key === "IsWarVeteran") {
                         return (
-                            <div key={key} className='flex items-center gap-2'>
+                            <div key={key} className="flex items-center gap-2">
                                 <input
-                                    type='checkbox'
+                                    type="checkbox"
                                     name={key}
                                     checked={form[key]}
                                     onChange={handleChange}
-                                    className='w-5 h-5 text-[#E6A17E] bg-[#121212] border border-[#3C4D6B] rounded focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
+                                    className="w-5 h-5 text-[#E6A17E] bg-[#121212] border border-[#3C4D6B] rounded focus:outline-none focus:ring-2 focus:ring-[#E6A17E]"
                                 />
-                                <label className='text-[#AFC6E0]'>
+                                <label className="text-[#AFC6E0]">
                                     {label}
                                 </label>
                             </div>
@@ -223,35 +225,38 @@ const Employees = () => {
 
                     return (
                         <div key={key}>
-                            <label className='block text-[#AFC6E0] mb-1'>
+                            <label className="block text-[#AFC6E0] mb-1">
                                 {label}
                             </label>
                             <input
-                                type='text'
+                                type="text"
                                 name={key}
                                 value={form[key]}
                                 onChange={handleChange}
                                 placeholder={`Введіть ${label.toLowerCase()}`}
-                                className='w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] text-white rounded focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
+                                className="w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] text-white rounded focus:outline-none focus:ring-2 focus:ring-[#E6A17E]"
                                 required={key !== "MiddleName"}
                             />
                         </div>
                     );
                 })}
 
-                <div className='md:col-span-2 flex justify-end gap-4 mt-4'>
+                <div className="md:col-span-2 flex justify-end gap-4 mt-4">
                     <button
-                        type='button'
-                        onClick={() => setForm(initialFormState)}
-                        className='bg-[#3C4D6B] hover:bg-[#586A91] text-white font-semibold py-2 px-6 rounded transition'
+                        type="button"
+                        onClick={handleReset}
+                        className="bg-[#3C4D6B] hover:bg-[#586A91] text-white font-semibold py-2 px-6 rounded transition"
+                        disabled={loading}
                     >
                         Очистити
                     </button>
                     <button
-                        type='submit'
-                        className='bg-[#E6A17E] hover:bg-[#C77C4E] text-[#121212] font-semibold py-2 px-6 rounded transition flex items-center gap-2'
+                        type="submit"
+                        className="bg-[#E6A17E] hover:bg-[#C77C4E] text-[#121212] font-semibold py-2 px-6 rounded transition flex items-center gap-2"
+                        disabled={loading}
                     >
-                        <Save size={18} /> Зберегти
+                        <Save size={18} />{" "}
+                        {loading ? "Зберігаємо..." : "Зберегти"}
                     </button>
                 </div>
             </form>

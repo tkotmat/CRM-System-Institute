@@ -9,11 +9,24 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Institute.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "CrmAccess",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Access = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CrmAccess", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Departments",
                 columns: table => new
@@ -144,6 +157,11 @@ namespace Institute.Migrations
                         principalColumn: "PassportNumber",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "CrmAccess",
+                columns: new[] { "Id", "Access" },
+                values: new object[] { 1, "VGVrHBV025Mh/Rq68NX0H7IXt66Fk/xklvql9qsVLAc=" });
 
             migrationBuilder.InsertData(
                 table: "Departments",
@@ -346,6 +364,9 @@ namespace Institute.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "CrmAccess");
+
             migrationBuilder.DropTable(
                 name: "PedagogicalLoads");
 

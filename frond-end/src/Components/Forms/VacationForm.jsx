@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { postRequest } from "../apiService";
 
 const initialForm = {
     VacationType: "",
@@ -9,6 +10,7 @@ const initialForm = {
 
 const VacationForm = () => {
     const [form, setForm] = useState(initialForm);
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -45,124 +47,116 @@ const VacationForm = () => {
         };
 
         try {
-            const response = await fetch(
-                "https://localhost:7032/api/Vacation",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(payload),
-                }
-            );
-
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(errorText || "Щось пішло не так...");
-            }
-
-            const data = await response.json();
-            console.log("Відпустку додано:", data);
+            setLoading(true);
+            await postRequest("/api/Vacation", payload);
             alert("Відпустку успішно додано!");
             handleReset();
         } catch (error) {
             console.error("Помилка при збереженні:", error);
-            alert(`Помилка при збереженні: ${error.message}`);
+            alert("Помилка при збереженні даних. Спробуйте пізніше.");
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <div className='max-w-3xl mx-auto p-6 mb-8 mt-10 bg-[#1C263A] border border-[#3C4D6B] rounded-lg shadow-lg text-[#D1D5DB]'>
-            <h2 className='text-xl font-semibold mb-6 text-white'>
+        <div className="max-w-3xl mx-auto p-6 mb-8 mt-10 bg-[#1C263A] border border-[#3C4D6B] rounded-lg shadow-lg text-[#D1D5DB]">
+            <h2 className="text-xl font-semibold mb-6 text-white">
                 Додати відпустку
             </h2>
             <form
                 onSubmit={handleSubmit}
-                className='grid grid-cols-1 md:grid-cols-2 gap-4'
+                className="grid grid-cols-1 md:grid-cols-2 gap-4"
             >
                 <div>
                     <label
-                        className='block text-[#AFC6E0] mb-1'
-                        htmlFor='VacationType'
+                        className="block text-[#AFC6E0] mb-1"
+                        htmlFor="VacationType"
                     >
                         Тип відпустки
                     </label>
                     <input
-                        id='VacationType'
-                        type='text'
-                        name='VacationType'
+                        id="VacationType"
+                        type="text"
+                        name="VacationType"
                         value={form.VacationType}
                         onChange={handleChange}
-                        placeholder='Наприклад: Щорічна відпустка'
-                        className='w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] text-white rounded focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
+                        placeholder="Наприклад: Щорічна відпустка"
+                        className="w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] text-white rounded focus:outline-none focus:ring-2 focus:ring-[#E6A17E]"
+                        required
                     />
                 </div>
 
                 <div>
                     <label
-                        className='block text-[#AFC6E0] mb-1'
-                        htmlFor='PassportNumber'
+                        className="block text-[#AFC6E0] mb-1"
+                        htmlFor="PassportNumber"
                     >
                         Номер паспорта
                     </label>
                     <input
-                        id='PassportNumber'
-                        type='number'
-                        name='PassportNumber'
+                        id="PassportNumber"
+                        type="number"
+                        name="PassportNumber"
                         value={form.PassportNumber}
                         onChange={handleChange}
-                        placeholder='123456'
-                        className='w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] text-white rounded focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
+                        placeholder="123456"
+                        className="w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] text-white rounded focus:outline-none focus:ring-2 focus:ring-[#E6A17E]"
+                        required
                     />
                 </div>
 
                 <div>
                     <label
-                        className='block text-[#AFC6E0] mb-1'
-                        htmlFor='StartDate'
+                        className="block text-[#AFC6E0] mb-1"
+                        htmlFor="StartDate"
                     >
                         Дата початку
                     </label>
                     <input
-                        id='StartDate'
-                        type='date'
-                        name='StartDate'
+                        id="StartDate"
+                        type="date"
+                        name="StartDate"
                         value={form.StartDate}
                         onChange={handleChange}
-                        className='w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] text-white rounded focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
+                        className="w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] text-white rounded focus:outline-none focus:ring-2 focus:ring-[#E6A17E]"
+                        required
                     />
                 </div>
 
                 <div>
                     <label
-                        className='block text-[#AFC6E0] mb-1'
-                        htmlFor='EndDate'
+                        className="block text-[#AFC6E0] mb-1"
+                        htmlFor="EndDate"
                     >
                         Дата закінчення
                     </label>
                     <input
-                        id='EndDate'
-                        type='date'
-                        name='EndDate'
+                        id="EndDate"
+                        type="date"
+                        name="EndDate"
                         value={form.EndDate}
                         onChange={handleChange}
-                        className='w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] text-white rounded focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
+                        className="w-full px-4 py-2 bg-[#121212] border border-[#3C4D6B] text-white rounded focus:outline-none focus:ring-2 focus:ring-[#E6A17E]"
+                        required
                     />
                 </div>
 
-                <div className='md:col-span-2 flex justify-end gap-4 mt-4'>
+                <div className="md:col-span-2 flex justify-end gap-4 mt-4">
                     <button
-                        type='button'
+                        type="button"
                         onClick={handleReset}
-                        className='bg-[#3C4D6B] hover:bg-[#586A91] text-white font-semibold py-2 px-6 rounded transition'
+                        className="bg-[#3C4D6B] hover:bg-[#586A91] text-white font-semibold py-2 px-6 rounded transition"
+                        disabled={loading}
                     >
                         Очистити
                     </button>
                     <button
-                        type='submit'
-                        className='bg-[#E6A17E] hover:bg-[#C77C4E] text-[#121212] font-semibold py-2 px-6 rounded transition'
+                        type="submit"
+                        className="bg-[#E6A17E] hover:bg-[#C77C4E] text-[#121212] font-semibold py-2 px-6 rounded transition"
+                        disabled={loading}
                     >
-                        Додати
+                        {loading ? "Додається..." : "Додати"}
                     </button>
                 </div>
             </form>

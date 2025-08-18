@@ -34,7 +34,7 @@ const Disciplines = () => {
 
                         return {
                             discipline: load.discipline,
-                            fullName: `${emp.surname} ${emp.name} ${emp.middleName}`,
+                            fullName: `${emp.lastName} ${emp.firstName} ${emp.middleName}`,
                             contractStartDate: emp.contractStartDate,
                         };
                     })
@@ -65,17 +65,17 @@ const Disciplines = () => {
     };
 
     return (
-        <div className='bg-[#121212] font-sans min-h-screen text-[#D1D5DB] p-6'>
-            <h1 className='text-2xl font-bold mb-6 text-white'>
+        <div className="bg-[#121212] font-sans min-h-screen text-[#D1D5DB] p-6">
+            <h1 className="text-2xl font-bold mb-6 text-white">
                 Працівники за дисципліною
             </h1>
 
             <select
                 value={selectedDiscipline}
                 onChange={(e) => setSelectedDiscipline(e.target.value)}
-                className='mb-6 w-full max-w-xl px-4 py-2 bg-[#121212] border border-[#3C4D6B] rounded text-white focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
+                className="mb-6 w-full max-w-xl px-4 py-2 bg-[#121212] border border-[#3C4D6B] rounded text-white focus:outline-none focus:ring-2 focus:ring-[#E6A17E]"
             >
-                <option value=''>Оберіть дисципліну</option>
+                <option value="">Оберіть дисципліну</option>
                 {disciplines.map((d, idx) => (
                     <option key={idx} value={d}>
                         {d}
@@ -84,29 +84,29 @@ const Disciplines = () => {
             </select>
 
             {loading ? (
-                <p className='text-white'>Завантаження...</p>
+                <p className="text-white">Завантаження...</p>
             ) : error ? (
-                <p className='text-red-500'>{error}</p>
+                <p className="text-red-500">{error}</p>
             ) : selectedDiscipline === "" ? (
-                <p className='italic text-[#BFA18D]'>
+                <p className="italic text-[#BFA18D]">
                     Оберіть дисципліну зі списку
                 </p>
             ) : filtered.length === 0 ? (
-                <p className='italic text-[#BFA18D]'>
+                <p className="italic text-[#BFA18D]">
                     Немає даних за вибраною дисципліною
                 </p>
             ) : (
-                <div className='max-w-6xl overflow-x-auto rounded-lg border border-[#3C4D6B] bg-[#171F2F] shadow-lg'>
-                    <table className='w-full table-auto border-collapse text-[#D1D5DB]'>
+                <div className="max-w-6xl overflow-x-auto rounded-lg border border-[#3C4D6B] bg-[#171F2F] shadow-lg">
+                    <table className="w-full table-auto border-collapse text-[#D1D5DB]">
                         <thead>
-                            <tr className='bg-[#101828]'>
-                                <th className='py-3 px-6 border-b border-[#3C4D6B] text-left'>
+                            <tr className="bg-[#101828]">
+                                <th className="py-3 px-6 border-b border-[#3C4D6B] text-left">
                                     ПІБ
                                 </th>
-                                <th className='py-3 px-6 border-b border-[#3C4D6B] text-left'>
+                                <th className="py-3 px-6 border-b border-[#3C4D6B] text-left">
                                     Дисципліна
                                 </th>
-                                <th className='py-3 px-6 border-b border-[#3C4D6B] text-left'>
+                                <th className="py-3 px-6 border-b border-[#3C4D6B] text-left">
                                     Дата прийому
                                 </th>
                             </tr>
@@ -121,13 +121,13 @@ const Disciplines = () => {
                                             : "bg-[#141C2B]"
                                     } hover:bg-[#2F3F5B] transition-colors`}
                                 >
-                                    <td className='py-3 px-6 border-b border-[#3C4D6B]'>
+                                    <td className="py-3 px-6 border-b border-[#3C4D6B]">
                                         {item.fullName}
                                     </td>
-                                    <td className='py-3 px-6 border-b border-[#3C4D6B]'>
+                                    <td className="py-3 px-6 border-b border-[#3C4D6B]">
                                         {item.discipline}
                                     </td>
-                                    <td className='py-3 px-6 border-b border-[#3C4D6B]'>
+                                    <td className="py-3 px-6 border-b border-[#3C4D6B]">
                                         {formatDate(item.contractStartDate)}
                                     </td>
                                 </tr>

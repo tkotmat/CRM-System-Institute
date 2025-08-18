@@ -53,17 +53,17 @@ const TeachersByDepartment = () => {
     };
 
     return (
-        <div className='bg-[#121212] font-sans min-h-screen text-[#D1D5DB] p-6'>
-            <h1 className='text-2xl font-bold mb-6 text-white'>
+        <div className="bg-[#121212] font-sans min-h-screen text-[#D1D5DB] p-6">
+            <h1 className="text-2xl font-bold mb-6 text-white">
                 Вчителі по відділу
             </h1>
 
             <select
                 value={selectedDepartment}
                 onChange={(e) => setSelectedDepartment(e.target.value)}
-                className='mb-6 w-full max-w-xl px-4 py-2 bg-[#121212] border border-[#3C4D6B] rounded text-white focus:outline-none focus:ring-2 focus:ring-[#E6A17E]'
+                className="mb-6 w-full max-w-xl px-4 py-2 bg-[#121212] border border-[#3C4D6B] rounded text-white focus:outline-none focus:ring-2 focus:ring-[#E6A17E]"
             >
-                <option value=''>Виберіть відділ</option>
+                <option value="">Виберіть відділ</option>
                 {departmentList.map((dep) => (
                     <option
                         key={dep.id || dep.departmentName}
@@ -75,35 +75,35 @@ const TeachersByDepartment = () => {
             </select>
 
             {loading ? (
-                <p className='text-white'>Завантаження...</p>
+                <p className="text-white">Завантаження...</p>
             ) : error ? (
-                <p className='text-red-500'>{error}</p>
+                <p className="text-red-500">{error}</p>
             ) : selectedDepartment === "" ? (
-                <p className='italic text-[#BFA18D]'>
+                <p className="italic text-[#BFA18D]">
                     Виберіть відділ зі списку
                 </p>
             ) : teachers.length === 0 ? (
-                <p className='italic text-[#BFA18D]'>
+                <p className="italic text-[#BFA18D]">
                     У цьому відділі немає працівників
                 </p>
             ) : (
-                <div className='max-w-6xl overflow-x-auto rounded-lg border border-[#3C4D6B] bg-[#171F2F] shadow-lg'>
-                    <table className='w-full table-auto border-collapse text-[#D1D5DB]'>
+                <div className="max-w-6xl overflow-x-auto rounded-lg border border-[#3C4D6B] bg-[#171F2F] shadow-lg">
+                    <table className="w-full table-auto border-collapse text-[#D1D5DB]">
                         <thead>
-                            <tr className='bg-[#101828]'>
-                                <th className='py-3 px-6 border-b border-[#3C4D6B] text-left'>
+                            <tr className="bg-[#101828]">
+                                <th className="py-3 px-6 border-b border-[#3C4D6B] text-left">
                                     Прізвище
                                 </th>
-                                <th className='py-3 px-6 border-b border-[#3C4D6B] text-left'>
+                                <th className="py-3 px-6 border-b border-[#3C4D6B] text-left">
                                     Ім'я
                                 </th>
-                                <th className='py-3 px-6 border-b border-[#3C4D6B] text-left'>
+                                <th className="py-3 px-6 border-b border-[#3C4D6B] text-left">
                                     По батькові
                                 </th>
-                                <th className='py-3 px-6 border-b border-[#3C4D6B] text-left'>
+                                <th className="py-3 px-6 border-b border-[#3C4D6B] text-left">
                                     Категорія
                                 </th>
-                                <th className='py-3 px-6 border-b border-[#3C4D6B] text-left'>
+                                <th className="py-3 px-6 border-b border-[#3C4D6B] text-left">
                                     Дата прийому
                                 </th>
                             </tr>
@@ -118,19 +118,19 @@ const TeachersByDepartment = () => {
                                             : "bg-[#141C2B]"
                                     } hover:bg-[#2F3F5B] transition-colors`}
                                 >
-                                    <td className='py-3 px-6 border-b border-[#3C4D6B]'>
-                                        {t.surname || "-"}
+                                    <td className="py-3 px-6 border-b border-[#3C4D6B]">
+                                        {t.lastName || "-"}
                                     </td>
-                                    <td className='py-3 px-6 border-b border-[#3C4D6B]'>
-                                        {t.name || "-"}
+                                    <td className="py-3 px-6 border-b border-[#3C4D6B]">
+                                        {t.firstName || "-"}
                                     </td>
-                                    <td className='py-3 px-6 border-b border-[#3C4D6B]'>
+                                    <td className="py-3 px-6 border-b border-[#3C4D6B]">
                                         {t.middleName || "-"}
                                     </td>
-                                    <td className='py-3 px-6 border-b border-[#3C4D6B]'>
+                                    <td className="py-3 px-6 border-b border-[#3C4D6B]">
                                         {t.category || "-"}
                                     </td>
-                                    <td className='py-3 px-6 border-b border-[#3C4D6B]'>
+                                    <td className="py-3 px-6 border-b border-[#3C4D6B]">
                                         {formatDate(t.contractStartDate)}
                                     </td>
                                 </tr>

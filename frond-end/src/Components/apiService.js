@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const BASE_URL = "https://localhost:7032";
+import { BASE_URL } from "./BASE_URL";
 
 const api = axios.create({
     baseURL: BASE_URL,
@@ -9,7 +8,6 @@ const api = axios.create({
     },
 });
 
-// Универсальный GET
 export const getRequest = async (url, params = {}) => {
     try {
         const response = await api.get(url, { params });
@@ -19,7 +17,6 @@ export const getRequest = async (url, params = {}) => {
     }
 };
 
-// Универсальный POST
 export const postRequest = async (url, data = {}) => {
     try {
         const response = await api.post(url, data);
@@ -29,7 +26,6 @@ export const postRequest = async (url, data = {}) => {
     }
 };
 
-// Универсальный PUT
 export const putRequest = async (url, data = {}) => {
     try {
         const response = await api.put(url, data);
@@ -39,7 +35,6 @@ export const putRequest = async (url, data = {}) => {
     }
 };
 
-// Универсальный DELETE
 export const deleteRequest = async (url) => {
     try {
         const response = await api.delete(url);
@@ -49,7 +44,6 @@ export const deleteRequest = async (url) => {
     }
 };
 
-// Обработчик ошибок
 const handleError = (error, method, url) => {
     console.error(
         `Ошибка ${method} запроса к ${url}:`,

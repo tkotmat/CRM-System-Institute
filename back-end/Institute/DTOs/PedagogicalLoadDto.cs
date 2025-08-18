@@ -1,6 +1,4 @@
-﻿using Institute.Entity;
-
-namespace Institute.DTOs
+﻿namespace Institute.DTOs
 {
     public class PedagogicalLoadDto
     {

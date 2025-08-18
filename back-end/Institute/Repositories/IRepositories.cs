@@ -1,4 +1,5 @@
 ﻿using Institute.DTOs;
+using Institute.Entity;
 
 namespace Institute.Repositories
 {
@@ -50,5 +51,10 @@ namespace Institute.Repositories
         Task<VacationDto> Create(VacationDto dto);
         Task<bool> Update(VacationDto dto);
         Task<bool> Delete(string vacationType, int passportNumber);
+    }
+
+    public interface IAccessRepositories
+    {
+        Task<CrmAccessEntity?> GetAccessCodeAsync();
     }
 }

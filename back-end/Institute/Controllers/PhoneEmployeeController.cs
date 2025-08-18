@@ -1,8 +1,6 @@
 ﻿using Institute.DTOs;
 using Institute.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Security.Cryptography;
 
 namespace Institute.Controllers
 {

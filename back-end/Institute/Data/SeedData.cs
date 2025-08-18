@@ -1,4 +1,5 @@
 ﻿using Institute.Entity;
+using Institute.Utilities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Institute.Data
@@ -136,6 +137,16 @@ namespace Institute.Data
                 });
             }
             modelBuilder.Entity<VacationEntity>().HasData(vacations);
+
+            string accessCode = "MySecretCrmCode123";
+            IHashCodeAccess hasher = new HashCodeAccess();
+            string hashedAccessCode = hasher.HashAccessCode(accessCode);
+
+            modelBuilder.Entity<CrmAccessEntity>().HasData(new CrmAccessEntity
+            {
+                Id = 1,
+                Access = hashedAccessCode
+            });
         }
     }
 }

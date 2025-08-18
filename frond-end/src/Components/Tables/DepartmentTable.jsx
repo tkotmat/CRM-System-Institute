@@ -99,30 +99,30 @@ const DepartmentTable = () => {
     };
 
     return (
-        <div className='bg-[#121212] font-sans min-h-screen text-[#D1D5DB] p-6'>
-            <h1 className='text-2xl font-bold mb-6 text-white'>Відділи</h1>
+        <div className="bg-[#121212] font-sans min-h-screen text-[#D1D5DB] p-6">
+            <h1 className="text-2xl font-bold mb-6 text-white">Відділи</h1>
             {loading ? (
-                <p className='text-white'>Завантаження...</p>
+                <p className="text-white">Завантаження...</p>
             ) : error ? (
-                <p className='text-red-400'>{error}</p>
+                <p className="text-red-400">{error}</p>
             ) : (
-                <div className='max-w-4xl overflow-x-auto rounded-lg border border-[#3C4D6B] bg-[#171F2F] shadow-lg'>
-                    <table className='w-full table-auto border-collapse text-[#D1D5DB]'>
+                <div className="max-w-4xl overflow-x-auto rounded-lg border border-[#3C4D6B] bg-[#171F2F] shadow-lg">
+                    <table className="w-full table-auto border-collapse text-[#D1D5DB]">
                         <thead>
-                            <tr className='bg-[#101828]'>
-                                <th className='py-3 px-6 border-b border-[#3C4D6B] text-white text-left'>
+                            <tr className="bg-[#101828]">
+                                <th className="py-3 px-6 border-b border-[#3C4D6B] text-white text-left">
                                     Назва відділу
                                 </th>
-                                <th className='py-3 px-6 border-b border-[#3C4D6B] text-white text-left'>
+                                <th className="py-3 px-6 border-b border-[#3C4D6B] text-white text-left">
                                     Керівник
                                 </th>
-                                <th className='py-3 px-6 border-b border-[#3C4D6B] text-white text-right'>
+                                <th className="py-3 px-6 border-b border-[#3C4D6B] text-white text-right">
                                     Кількість викладачів
                                 </th>
-                                <th className='py-3 px-6 border-b border-[#3C4D6B] text-white text-center'>
+                                <th className="py-3 px-6 border-b border-[#3C4D6B] text-white text-center">
                                     Редагувати
                                 </th>
-                                <th className='py-3 px-6 border-b border-[#3C4D6B] text-white text-center'>
+                                <th className="py-3 px-6 border-b border-[#3C4D6B] text-white text-center">
                                     Видалити
                                 </th>
                             </tr>
@@ -144,70 +144,69 @@ const DepartmentTable = () => {
                                                 : "bg-[#141C2B]"
                                         } hover:bg-[#2F3F5B] transition-colors duration-200`}
                                     >
-                                        <td className='py-3 px-6 border-b border-[#3C4D6B]'>
+                                        <td className="py-3 px-6 border-b border-[#3C4D6B]">
                                             {isEditing ? (
                                                 <input
-                                                    type='text'
-                                                    name='departmentName'
+                                                    type="text"
+                                                    name="departmentName"
                                                     value={
                                                         editForm.departmentName
                                                     }
                                                     onChange={handleChange}
-                                                    className='w-full bg-[#171F2F] text-white border border-gray-600 rounded px-2 py-1'
+                                                    className="w-full bg-[#171F2F] text-white border border-gray-600 rounded px-2 py-1"
                                                     disabled={saving}
                                                 />
                                             ) : (
                                                 dep.departmentName || "—"
                                             )}
                                         </td>
-                                        <td className='py-3 px-6 border-b border-[#3C4D6B]'>
+                                        <td className="py-3 px-6 border-b border-[#3C4D6B]">
                                             {isEditing ? (
                                                 <input
-                                                    type='text'
-                                                    name='head'
+                                                    type="text"
+                                                    name="head"
                                                     value={editForm.head}
                                                     onChange={handleChange}
-                                                    className='w-full bg-[#171F2F] text-white border border-gray-600 rounded px-2 py-1'
+                                                    className="w-full bg-[#171F2F] text-white border border-gray-600 rounded px-2 py-1"
                                                     disabled={saving}
                                                 />
                                             ) : (
                                                 dep.head || "—"
                                             )}
                                         </td>
-                                        <td className='py-3 px-6 border-b border-[#3C4D6B] text-right font-semibold'>
+                                        <td className="py-3 px-6 border-b border-[#3C4D6B] text-right font-semibold">
                                             {isEditing ? (
                                                 <input
-                                                    type='number'
-                                                    name='lecturerCount'
+                                                    type="number"
+                                                    name="lecturerCount"
                                                     value={
                                                         editForm.lecturerCount
                                                     }
                                                     onChange={handleChange}
                                                     min={0}
-                                                    className='w-20 bg-[#171F2F] text-white border border-gray-600 rounded px-2 py-1 text-right'
+                                                    className="w-20 bg-[#171F2F] text-white border border-gray-600 rounded px-2 py-1 text-right"
                                                     disabled={saving}
                                                 />
                                             ) : (
                                                 dep.lecturerCount ?? "—"
                                             )}
                                         </td>
-                                        {/* Колонка для редактирования */}
-                                        <td className='py-3 px-6 border-b border-[#3C4D6B] text-center'>
+                                        <td className="py-3 px-6 border-b border-[#3C4D6B] text-center">
                                             {isEditing ? (
                                                 <>
                                                     <button
                                                         onClick={saveChanges}
                                                         disabled={saving}
-                                                        className='bg-green-600 hover:bg-green-700 px-3 py-1 rounded text-white mr-2'
-                                                        title='Сохранить изменения'
+                                                        className="bg-green-600 hover:bg-green-700 px-3 py-1 rounded text-white mr-2"
+                                                        title="Сохранить изменения"
                                                     >
                                                         💾
                                                     </button>
                                                     <button
                                                         onClick={cancelEditing}
                                                         disabled={saving}
-                                                        className='bg-gray-600 hover:bg-gray-700 px-3 py-1 rounded text-white'
-                                                        title='Отменить редактирование'
+                                                        className="bg-gray-600 hover:bg-gray-700 px-3 py-1 rounded text-white"
+                                                        title="Отменить редактирование"
                                                     >
                                                         ✖
                                                     </button>
@@ -217,15 +216,14 @@ const DepartmentTable = () => {
                                                     onClick={() =>
                                                         startEditing(dep)
                                                     }
-                                                    className='bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-white'
-                                                    title='Редактировать'
+                                                    className="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-white"
+                                                    title="Редактировать"
                                                 >
                                                     ✏️
                                                 </button>
                                             )}
                                         </td>
-                                        {/* Колонка для удаления */}
-                                        <td className='py-3 px-6 border-b border-[#3C4D6B] text-center'>
+                                        <td className="py-3 px-6 border-b border-[#3C4D6B] text-center">
                                             <button
                                                 onClick={() =>
                                                     handleDelete(
@@ -237,20 +235,20 @@ const DepartmentTable = () => {
                                                     dep.departmentName
                                                 }
                                                 title={`Удалить отдел ${dep.departmentName}`}
-                                                className='bg-black hover:bg-gray-800 px-3 py-1 rounded text-red-500'
+                                                className="bg-black hover:bg-gray-800 px-3 py-1 rounded text-red-500"
                                             >
                                                 <svg
-                                                    xmlns='http://www.w3.org/2000/svg'
-                                                    fill='none'
-                                                    viewBox='0 0 24 24'
-                                                    stroke='currentColor'
-                                                    className='w-5 h-5 mx-auto'
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                    stroke="currentColor"
+                                                    className="w-5 h-5 mx-auto"
                                                 >
                                                     <path
-                                                        strokeLinecap='round'
-                                                        strokeLinejoin='round'
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
                                                         strokeWidth={2}
-                                                        d='M6 18L18 6M6 6l12 12'
+                                                        d="M6 18L18 6M6 6l12 12"
                                                     />
                                                 </svg>
                                             </button>
@@ -262,7 +260,7 @@ const DepartmentTable = () => {
                                 <tr>
                                     <td
                                         colSpan={5}
-                                        className='py-4 text-center text-[#BFA18D] italic'
+                                        className="py-4 text-center text-[#BFA18D] italic"
                                     >
                                         Нет данных по запросу
                                     </td>

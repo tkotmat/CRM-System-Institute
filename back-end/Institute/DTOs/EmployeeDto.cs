@@ -1,6 +1,4 @@
-﻿using Institute.Entity;
-
-namespace Institute.DTOs
+﻿namespace Institute.DTOs
 {
     public class EmployeeDto
     {
@@ -14,10 +12,10 @@ namespace Institute.DTOs
         public int WorkExperience { get; set; }
         public string City { get; set; }
         public string Street { get; set; }
-        public string Category { get; set; } // Категорія — Короткий текст
-        public DateTime ContractStartDate { get; set; } // Дата початку контракту
-        public DateTime ContractEndDate { get; set; } // Дата завершення договору
-        public bool IsWarVeteran { get; set; } // Медаль «Ветеран Війни» — Логічний
+        public string Category { get; set; }
+        public DateTime ContractStartDate { get; set; }
+        public DateTime ContractEndDate { get; set; }
+        public bool IsWarVeteran { get; set; }
 
     }
 }

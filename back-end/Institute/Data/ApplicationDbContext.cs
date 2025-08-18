@@ -14,6 +14,7 @@ namespace Institute.Data
         public DbSet<PhoneEmployeeEntity> PhoneEmployees { get; set; }
         public DbSet<ReferencesEntity> References { get; set; }
         public DbSet<VacationEntity> Vacations { get; set; }
+        public DbSet<CrmAccessEntity> CrmAccess { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
