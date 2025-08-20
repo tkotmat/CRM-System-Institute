@@ -18,7 +18,7 @@ namespace Institute.Controllers
 
         }
 		[HttpGet]
-		public async Task<IActionResult> Access—heck()
+		public async Task<IActionResult> AccessCheck()
 		{
 			if (!Request.Headers.TryGetValue("Authorization", out var authHeader))
 				return Unauthorized("Missing Authorization header");
