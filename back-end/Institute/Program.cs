@@ -34,7 +34,9 @@ builder.Services.AddCors(options =>
                 try
                 {
                     var uri = new Uri(origin);
-                    return uri.Host == "localhost" || uri.Host.EndsWith("ngrok-free.app");
+                    return uri.Host == "localhost"
+                           || uri.Host.EndsWith("ngrok-free.app")
+                           || uri.Host == "frond-end-institute.fly.dev";
                 }
                 catch
                 {
