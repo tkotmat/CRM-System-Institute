@@ -18,9 +18,9 @@ jobs:
               uses: superfly/flyctl-actions/setup-flyctl@master
 
             - name: Deploy Backend
-              working-directory: ./back-end/Institute
               run: |
                   flyctl deploy \
+                    --config ./back-end/Institute/fly.toml \
                     --app crm-system-institute \
                     --remote-only \
                     --access-token ${{ secrets.FLY_DEPLOY_BACKEND }}
@@ -37,9 +37,9 @@ jobs:
               uses: superfly/flyctl-actions/setup-flyctl@master
 
             - name: Deploy Frontend
-              working-directory: ./frond-end
               run: |
                   flyctl deploy \
+                    --config ./frond-end/fly.toml \
                     --app frond-end-institute \
                     --remote-only \
                     --access-token ${{ secrets.FLY_DEPLOY_FRONTEND }}
