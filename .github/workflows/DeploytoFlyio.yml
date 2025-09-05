@@ -1,0 +1,41 @@
+name: Deploy to Fly.io
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    deploy-backend:
+        name: Deploy Backend (.NET)
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v3
+
+            - name: Set up Fly CLI
+              uses: superfly/flyctl-actions/setup-flyctl@master
+
+            - name: Deploy Backend
+              run: |
+                  flyctl deploy \
+                    --app crm-system-institute \
+                    --remote-only \
+                    --access-token ${{ secrets.FLY_DEPLOY_BACKEND }}
+
+    deploy-frontend:
+        name: Deploy Frontend (React)
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v3
+
+            - name: Set up Fly CLI
+              uses: superfly/flyctl-actions/setup-flyctl@master
+
+            - name: Deploy Frontend
+              run: |
+                  flyctl deploy \
+                    --app frond-end-institute \
+                    --remote-only \
+                    --access-token ${{ secrets.FLY_DEPLOY_FRONTEND }}

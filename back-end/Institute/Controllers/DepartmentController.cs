@@ -21,6 +21,7 @@ namespace Institute.Controllers
         public async Task<IActionResult> GetByName(string departmentName)
         {
             var department = await _departmentRepositories.GetByName(departmentName);
+            Console.WriteLine(department);
             return department == null ? NotFound() : Ok(department);
         }
 
