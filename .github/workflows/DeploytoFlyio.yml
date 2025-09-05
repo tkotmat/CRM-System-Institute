@@ -18,6 +18,7 @@ jobs:
               uses: superfly/flyctl-actions/setup-flyctl@master
 
             - name: Deploy Backend
+              working-directory: ./back-end/Institute
               run: |
                   flyctl deploy \
                     --app crm-system-institute \
@@ -36,6 +37,7 @@ jobs:
               uses: superfly/flyctl-actions/setup-flyctl@master
 
             - name: Deploy Frontend
+              working-directory: ./frond-end
               run: |
                   flyctl deploy \
                     --app frond-end-institute \
