@@ -14,7 +14,7 @@ export const AccessCode = () => {
         setLoading(true);
         setError("");
         try {
-            await axios.get(`${BASE_URL}/api/access`, {
+            await axios.get(`${BASE_URL}/api/Access`, {
                 headers: { Authorization: `Bearer ${code}` },
             });
             sessionStorage.setItem("accessGranted", "true");
