@@ -1,160 +1,160 @@
 # 🎓 CRM System Institute
 
-Веб-приложение для управления данными учебного заведения. Разработано как фриланс-проект для автоматизации работы института.
+Web application for managing educational institution data. Developed as a freelance project to automate institute operations.
 
-## 📋 Описание проекта
+## 📋 Project Description
 
-**CRM System Institute** - это полнофункциональная веб-система управления данными института, реализующая CRUD операции (Create, Read, Update, Delete) для работы с информацией о студентах, преподавателях, кафедрах и других объектах учебного заведения.
+**CRM System Institute** is a full-featured web-based institute data management system implementing CRUD operations (Create, Read, Update, Delete) for working with information about students, teachers, departments, and other educational institution entities.
 
-Система разработана с учетом специфики работы образовательных учреждений и предоставляет удобный интерфейс для управления академическими данными.
+The system is designed with consideration for the specifics of educational institutions and provides a convenient interface for managing academic data.
 
-> **🇺🇦 Важливо:** Інтерфейс системи повністю виконаний українською мовою відповідно до вимог замовника та особливостей регіону використання. Це забезпечує максимальну зручність для користувачів навчального закладу в Україні.
+> **🇺🇦 Important:** The system interface is fully implemented in Ukrainian according to client requirements and regional usage specifics. This ensures maximum convenience for users of the educational institution in Ukraine.
 
-### 🔄 Универсальность и адаптивность
+### 🔄 Universality and Adaptability
 
-💡 **Этот проект можно использовать как шаблон!** 
+💡 **This project can be used as a template!** 
 
-🔗 **Ссылка на сайт:** [https://your-site.com](https://frond-end-institute.fly.dev/)  
-🔑 **Код доступа:** `MySecretCrmCode123`
+🔗 **Website Link:** [https://your-site.com](https://frond-end-institute.fly.dev/)  
+🔑 **Access Code:** `MySecretCrmCode123`
 
-Архитектура системы построена таким образом, что её легко адаптировать под любую предметную область:
+The system architecture is built in such a way that it can be easily adapted to any domain:
 
-- 🏥 **Медицинские учреждения** - управление пациентами, врачами, назначениями
-- 🏪 **Торговля и склад** - товары, поставщики, заказы, остатки
-- 🏢 **Офисное управление** - сотрудники, проекты, задачи, отчеты
-- 🚗 **Автосервис** - клиенты, автомобили, ремонты, запчасти
-- 🏨 **Гостиничный бизнес** - номера, бронирования, гости, услуги
-- 🏋️ **Фитнес-центр** - клиенты, абонементы, тренировки, тренеры
+- 🏥 **Medical Facilities** - managing patients, doctors, appointments
+- 🏪 **Trade and Warehouse** - products, suppliers, orders, inventory
+- 🏢 **Office Management** - employees, projects, tasks, reports
+- 🚗 **Auto Service** - clients, vehicles, repairs, parts
+- 🏨 **Hotel Business** - rooms, bookings, guests, services
+- 🏋️ **Fitness Center** - clients, memberships, workouts, trainers
 
-Вам нужно лишь изменить структуру данных, формы и запросы под вашу специфику!
+You only need to modify the data structure, forms, and queries to fit your specific needs!
 
-## ✨ Основные возможности
+## ✨ Key Features
 
-### 🔐 Безопасность
-- **Защищенный доступ** - вход в систему по коду доступа
-- **Аутентификация** - только авторизованные пользователи могут работать с данными
+### 🔐 Security
+- **Protected Access** - system login via access code
+- **Authentication** - only authorized users can work with data
 
-### 📝 CRUD операции
-- ✏️ **Создание записей** - формы для заполнения данных по различным сущностям института
-- 📊 **Просмотр данных** - таблица с отображением всех записей из базы данных
-- ✏️ **Редактирование** - изменение существующих записей
-- 🗑️ **Удаление** - удаление ненужных записей
+### 📝 CRUD Operations
+- ✏️ **Create Records** - forms for filling in data for various institute entities
+- 📊 **View Data** - table displaying all records from the database
+- ✏️ **Edit** - modify existing records
+- 🗑️ **Delete** - remove unnecessary records
 
-### 📈 Аналитика и отчеты
-- 📊 **Статистические запросы** - получение аналитической информации
-- 🎯 **Средний балл по кафедре** - расчет успеваемости студентов по кафедрам
-- 📑 **Пользовательские запросы** - выполнение специализированных выборок данных
+### 📈 Analytics and Reports
+- 📊 **Statistical Queries** - obtaining analytical information
+- 🎯 **Average GPA by Department** - calculating student performance by departments
+- 📑 **Custom Queries** - executing specialized data selections
 
-### 🎨 Интерфейс
-- 💻 **Интуитивный веб-интерфейс** - простота использования
-- 📱 **Отзывчивый дизайн** - работает на различных устройствах
-- 🗂️ **Табличное представление** - удобный просмотр больших объемов данных
-- 🇺🇦 **Українська мова** - повна локалізація інтерфейсу
+### 🎨 Interface
+- 💻 **Intuitive Web Interface** - ease of use
+- 📱 **Responsive Design** - works on various devices
+- 🗂️ **Tabular Presentation** - convenient viewing of large data volumes
+- 🇺🇦 **Ukrainian Language** - complete interface localization
 
-## 🚀 Установка и запуск
+## 🚀 Installation and Launch
 
-### Предварительные требования
+### Prerequisites
 
 ```
-- База данных (PostgreSQL)
+- Database (PostgreSQL)
 - .NET 6.0+ SDK
 - Node.js 16+
 ```
 
-### Установка
+### Installation
 
-1. Клонируйте репозиторий:
+1. Clone the repository:
 ```bash
 git clone https://github.com/tkotmat/CRM-System-Institute.git
 cd CRM-System-Institute
 ```
 
-2. Настройте подключение к базе данных в конфигурационном файле (`appsettings.json`)
+2. Configure database connection in the configuration file (`appsettings.json`)
 
-4. Установите зависимости фронтенда:
+3. Install frontend dependencies:
 ```bash
 cd ClientApp
 npm install
 ```
 
-5. Настройте веб-сервер для работы с приложением
+4. Configure web server to work with the application
 
-6. Установите код доступа в настройках системы
+5. Set access code in system settings
 
-### Первый запуск
+### First Launch
 
-1. Откройте браузер и перейдите по адресу вашего сервера
-2. Введите код доступа
-3. Начните работу с системой
+1. Open browser and navigate to your server address
+2. Enter access code
+3. Start working with the system
 
-## 💻 Использование
+## 💻 Usage
 
-### Вход в систему
+### System Login
 
-1. Откройте веб-приложение
-2. Введите код доступа
-3. Нажмите "Войти"
+1. Open the web application
+2. Enter access code
+3. Click "Login"
 
-### Добавление записи
+### Adding a Record
 
-1. Выберите соответствующую форму (Студенты, Преподаватели и т.д.)
-2. Заполните все обязательные поля
-3. Нажмите "Сохранить"
+1. Select the appropriate form (Students, Teachers, etc.)
+2. Fill in all required fields
+3. Click "Save"
 
-### Просмотр данных
+### Viewing Data
 
-1. Перейдите в раздел "Таблицы"
-2. Выберите нужную таблицу
-3. Просмотрите все записи
+1. Go to "Tables" section
+2. Select the desired table
+3. View all records
 
-### Редактирование записи
+### Editing a Record
 
-1. В таблице найдите нужную запись
-2. Нажмите кнопку "Редактировать"
-3. Измените необходимые поля
-4. Сохраните изменения
+1. Find the required record in the table
+2. Click "Edit" button
+3. Modify necessary fields
+4. Save changes
 
-### Удаление записи
+### Deleting a Record
 
-1. В таблице найдите запись для удаления
-2. Нажмите кнопку "Удалить"
-3. Подтвердите удаление
+1. Find the record to delete in the table
+2. Click "Delete" button
+3. Confirm deletion
 
-### Аналитические запросы
+### Analytical Queries
 
-1. Перейдите в раздел "Отчеты" или "Аналитика"
-2. Выберите тип запроса (например, "Средний балл по кафедре")
-3. Укажите параметры (название кафедры)
-4. Получите результат
+1. Go to "Reports" or "Analytics" section
+2. Select query type (e.g., "Average GPA by Department")
+3. Specify parameters (department name)
+4. Get results
 
-## 🛠️ Технологии
+## 🛠️ Technologies
 
 - **Backend**: ASP.NET Core, C#
 - **Frontend**: React.js, HTML5, CSS3, JavaScript
-- **Стилизация**: Tailwind CSS
-- **База данных**: PostgreSQL
+- **Styling**: Tailwind CSS
+- **Database**: PostgreSQL
 - **ORM**: Entity Framework Core (EF Core)
 
-## 📝 О проекте
+## 📝 About the Project
 
-### 💼 Кастомная разработка
+### 💼 Custom Development
 
-Этот проект был разработан на заказ для конкретного образовательного учреждения в Украине со следующими требованиями:
+This project was developed on order for a specific educational institution in Ukraine with the following requirements:
 
-- ✅ **Украиноязычный интерфейс** - весь UI выполнен на украинском языке
-- ✅ **Региональная адаптация** - учтены особенности украинской системы образования
-- ✅ **Специфические требования заказчика** - функционал разработан под конкретные бизнес-процессы института
-- ✅ **Локальная терминология** - использование привычных для украинских пользователей терминов
+- ✅ **Ukrainian Language Interface** - entire UI implemented in Ukrainian
+- ✅ **Regional Adaptation** - considers features of the Ukrainian education system
+- ✅ **Client-Specific Requirements** - functionality developed for specific institute business processes
+- ✅ **Local Terminology** - uses terms familiar to Ukrainian users
 
-### 🎯 Применение
+### 🎯 Application
 
-Хотя система создана для конкретного заказчика, архитектура позволяет легко адаптировать её для:
-- Других учебных заведений Украины
-- Образовательных учреждений с аналогичной структурой
-- Любых организаций, требующих системы управления данными с похожей логикой
+Although the system was created for a specific client, the architecture allows easy adaptation for:
+- Other educational institutions in Ukraine
+- Educational institutions with similar structure
+- Any organizations requiring data management systems with similar logic
 
-## 📧 Контакты
+## 📧 Contacts
 
-Если у вас есть вопросы или предложения, пожалуйста, создайте [Issue](../../issues).
+If you have questions or suggestions, please create an [Issue](../../issues).
 
 ---
